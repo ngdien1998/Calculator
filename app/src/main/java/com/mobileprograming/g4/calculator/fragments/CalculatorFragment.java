@@ -14,12 +14,12 @@ import com.mobileprograming.g4.calculator.R;
 public class CalculatorFragment extends Fragment {
 
     private Button btnNum0, btnNum1, btnNum2, btnNum3, btnNum4, btnNum5, btnNum6, btnNum7, btnNum8, btnNum9,
-            btnPlusMinus, btnEqual, btnPlus, btnMinus, btnMultifly, btnDevide,
-            btnDot, btnPercent, btnParentheses, btnClear,
-            btnE_FactorialOfX, btnPi_CubeOfX, btnAbsX_2PowersX, btnXPowersN_TanhPowersMinus1,
-            btnXPowers2_CoshPowersMinus1, btnEPowersN_SinhPowersMinus1, btnLn_Sinh, btnLog_Cosh,
-            btn1DevideX_Tanh, btnTan_Arctan, btnCos_Arccos, btnSin_Arcsin, btnSquareRoot_CubeRoot,
-            btnRad, btnMore;
+                   btnPlusMinus, btnEqual, btnPlus, btnMinus, btnMultifly, btnDevide,
+                   btnDot, btnPercent, btnParentheses, btnClear,
+                   btnE_FactorialOfX, btnPi_CubeOfX, btnAbsX_2PowersX, btnXPowersN_TanhPowersMinus1,
+                   btnXPowers2_CoshPowersMinus1, btnEPowersN_SinhPowersMinus1, btnLn_Sinh, btnLog_Cosh,
+                   btn1DevideX_Tanh, btnTan_Arctan, btnCos_Arccos, btnSin_Arcsin, btnSquareRoot_CubeRoot,
+                   btnRad, btnMore, btnHistory, btnRotate, btnBackspace;
 
     private boolean mIsLanscape;
 
@@ -37,6 +37,10 @@ public class CalculatorFragment extends Fragment {
     }
 
     private void mapControls(View view) {
+        btnHistory = view.findViewById(R.id.btnHistory);
+        btnRotate = view.findViewById(R.id.btnRotate);
+        btnBackspace = view.findViewById(R.id.btnBackspace);
+
         btnNum0 = view.findViewById(R.id.btnNum0);
         btnNum1 = view.findViewById(R.id.btnNum1);
         btnNum2 = view.findViewById(R.id.btnNum2);
@@ -80,6 +84,10 @@ public class CalculatorFragment extends Fragment {
     }
 
     private void addEvents() {
+        btnHistory.setOnClickListener(this::btnHistoryOnClick);
+        btnRotate.setOnClickListener(this::btnRotateOnClick);
+        btnBackspace.setOnClickListener(this::btnBackspaceOnClick);
+
         btnNum0.setOnClickListener(this::btnNum0OnClick);
         btnNum1.setOnClickListener(this::btnNum1OnClick);
         btnNum2.setOnClickListener(this::btnNum2OnClick);
@@ -118,6 +126,15 @@ public class CalculatorFragment extends Fragment {
             btnRad.setOnClickListener(this::btnRadOnClick);
             btnMore.setOnClickListener(this::btnMoreOnClick);
         }
+    }
+
+    private void btnBackspaceOnClick(View view) {
+    }
+
+    private void btnRotateOnClick(View view) {
+    }
+
+    private void btnHistoryOnClick(View view) {
     }
 
     private void btnNum0OnClick(View view) {
