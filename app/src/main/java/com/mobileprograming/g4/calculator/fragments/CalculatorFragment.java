@@ -21,10 +21,14 @@ public class CalculatorFragment extends Fragment {
             btn1DevideX_Tanh, btnTan_Arctan, btnCos_Arccos, btnSin_Arcsin, btnSquareRoot_CubeRoot,
             btnRad, btnMore;
 
+    private boolean mIsLanscape;
+
     @Nullable
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
         View view = inflater.inflate(R.layout.fragment_calculator, container, false);
+
+        mIsLanscape = false;
 
         mapControls(view);
         addEvents();
@@ -53,6 +57,7 @@ public class CalculatorFragment extends Fragment {
         btnPercent = view.findViewById(R.id.btnPercent);
         btnParentheses = view.findViewById(R.id.btnParentheses);
         btnClear = view.findViewById(R.id.btnClear);
+
         btnE_FactorialOfX = view.findViewById(R.id.btnE_FactorialOfX);
         btnPi_CubeOfX = view.findViewById(R.id.btnPi_CubeOfX);
         btnAbsX_2PowersX = view.findViewById(R.id.btnAbsX_2PowersX);
@@ -68,6 +73,10 @@ public class CalculatorFragment extends Fragment {
         btnSquareRoot_CubeRoot = view.findViewById(R.id.btnSquareRoot_CubeRoot);
         btnRad = view.findViewById(R.id.btnRad);
         btnMore = view.findViewById(R.id.btnMore);
+
+        if (btnMore != null) {
+            mIsLanscape = true;
+        }
     }
 
     private void addEvents() {
@@ -91,21 +100,24 @@ public class CalculatorFragment extends Fragment {
         btnPercent.setOnClickListener(this::btnPercentOnClick);
         btnParentheses.setOnClickListener(this::btnParenthesesOnClick);
         btnClear.setOnClickListener(this::btnClearOnClick);
-        btnE_FactorialOfX.setOnClickListener(this::btnE_FactorialOfXOnClick);
-        btnPi_CubeOfX.setOnClickListener(this::btnPi_CubeOfXOnClick);
-        btnAbsX_2PowersX.setOnClickListener(this::btnAbsX_2PowersXOnClick);
-        btnXPowersN_TanhPowersMinus1.setOnClickListener(this::btnXPowersN_TanhPowersMinus1OnClick);
-        btnXPowers2_CoshPowersMinus1.setOnClickListener(this::btnXPowers2_CoshPowersMinus1OnClick);
-        btnEPowersN_SinhPowersMinus1.setOnClickListener(this::btnEPowersN_SinhPowersMinus1OnClick);
-        btnLn_Sinh.setOnClickListener(this::btnLn_SinhOnClick);
-        btnLog_Cosh.setOnClickListener(this::btn1DevideX_TanhOnClick);
-        btn1DevideX_Tanh.setOnClickListener(this::btn1DevideX_TanhOnClick);
-        btnTan_Arctan.setOnClickListener(this::btnTan_ArctanOnClick);
-        btnCos_Arccos.setOnClickListener(this::btnCos_ArccosOnClick);
-        btnSin_Arcsin.setOnClickListener(this::btnSin_ArcsinOnClick);
-        btnSquareRoot_CubeRoot.setOnClickListener(this::btnSquareRoot_CubeRootOnClick);
-        btnRad.setOnClickListener(this::btnRadOnClick);
-        btnMore.setOnClickListener(this::btnMoreOnClick);
+
+        if (mIsLanscape) {
+            btnE_FactorialOfX.setOnClickListener(this::btnE_FactorialOfXOnClick);
+            btnPi_CubeOfX.setOnClickListener(this::btnPi_CubeOfXOnClick);
+            btnAbsX_2PowersX.setOnClickListener(this::btnAbsX_2PowersXOnClick);
+            btnXPowersN_TanhPowersMinus1.setOnClickListener(this::btnXPowersN_TanhPowersMinus1OnClick);
+            btnXPowers2_CoshPowersMinus1.setOnClickListener(this::btnXPowers2_CoshPowersMinus1OnClick);
+            btnEPowersN_SinhPowersMinus1.setOnClickListener(this::btnEPowersN_SinhPowersMinus1OnClick);
+            btnLn_Sinh.setOnClickListener(this::btnLn_SinhOnClick);
+            btnLog_Cosh.setOnClickListener(this::btn1DevideX_TanhOnClick);
+            btn1DevideX_Tanh.setOnClickListener(this::btn1DevideX_TanhOnClick);
+            btnTan_Arctan.setOnClickListener(this::btnTan_ArctanOnClick);
+            btnCos_Arccos.setOnClickListener(this::btnCos_ArccosOnClick);
+            btnSin_Arcsin.setOnClickListener(this::btnSin_ArcsinOnClick);
+            btnSquareRoot_CubeRoot.setOnClickListener(this::btnSquareRoot_CubeRootOnClick);
+            btnRad.setOnClickListener(this::btnRadOnClick);
+            btnMore.setOnClickListener(this::btnMoreOnClick);
+        }
     }
 
     private void btnNum0OnClick(View view) {

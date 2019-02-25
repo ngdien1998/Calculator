@@ -1,0 +1,6 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <dimen name="button_corner_radius">32dp</dimen>
+    <dimen name="button_size_landscape">20sp</dimen>
+    <dimen name="button_height_landscape">38dp</dimen>
+</resources>
