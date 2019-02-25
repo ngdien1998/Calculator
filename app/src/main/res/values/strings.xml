@@ -7,8 +7,8 @@
     <string name="btn_rad_label">RAD</string>
     <string name="btn_sqrt_label">√</string>
     <string name="btn_clear_label">C</string>
-    <string name="btn_arentheses_label">()</string>
-    <string name="btn_ercent_label">%</string>
+    <string name="btn_parentheses_label">()</string>
+    <string name="btn_percent_label">%</string>
     <string name="btn_devide_label">÷</string>
     <string name="btn_sin_label">sin</string>
     <string name="btn_cos_lalbel">cos</string>
