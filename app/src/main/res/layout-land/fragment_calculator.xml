@@ -79,13 +79,14 @@
                 android:textSize="24sp" />
 
             <Button
-                android:id="@+id/btnSqrtCbrt"
+                android:id="@+id/btnSquareRoot_CubeRoot"
                 style="?android:attr/borderlessButtonStyle"
                 android:layout_margin="2dp"
                 android:background="@drawable/round_button"
                 android:paddingTop="10dp"
                 android:paddingBottom="10dp"
                 android:text="@string/btn_sqrt_label"
+                android:tag="square_root"
                 android:textColor="#37474F"
                 android:textSize="24sp" />
 
@@ -138,37 +139,40 @@
         <TableRow>
 
             <Button
-                android:id="@+id/btnSinArcsin"
+                android:id="@+id/btnSin_Arcsin"
                 style="?android:attr/borderlessButtonStyle"
                 android:layout_margin="2dp"
                 android:background="@drawable/round_button"
                 android:paddingTop="10dp"
                 android:paddingBottom="10dp"
                 android:text="@string/btn_sin_label"
+                android:tag="sin"
                 android:textAllCaps="false"
                 android:textColor="#37474F"
                 android:textSize="24sp" />
 
             <Button
-                android:id="@+id/btnCosArccos"
+                android:id="@+id/btnCos_Arccos"
                 style="?android:attr/borderlessButtonStyle"
                 android:layout_margin="2dp"
                 android:background="@drawable/round_button"
                 android:paddingTop="10dp"
                 android:paddingBottom="10dp"
                 android:text="@string/btn_cos_lalbel"
+                android:tag="cos"
                 android:textAllCaps="false"
                 android:textColor="#37474F"
                 android:textSize="24sp" />
             
             <Button
-                android:id="@+id/btnTanArctan"
+                android:id="@+id/btnTan_Arctan"
                 style="?android:attr/borderlessButtonStyle"
                 android:layout_margin="2dp"
                 android:background="@drawable/round_button"
                 android:paddingTop="10dp"
                 android:paddingBottom="10dp"
                 android:text="@string/btn_tan_label"
+                android:tag="tan"
                 android:textAllCaps="false"
                 android:textColor="#37474F"
                 android:textSize="24sp" />
@@ -224,37 +228,40 @@
         <TableRow>
 
             <Button
-                android:id="@+id/btnLnSinh"
+                android:id="@+id/btnLn_Sinh"
                 style="?android:attr/borderlessButtonStyle"
                 android:layout_margin="2dp"
                 android:background="@drawable/round_button"
                 android:paddingTop="10dp"
                 android:paddingBottom="10dp"
                 android:text="@string/btn_ln_label"
+                android:tag="ln"
                 android:textAllCaps="false"
                 android:textColor="#37474F"
                 android:textSize="24sp" />
 
             <Button
-                android:id="@+id/btnLogCosh"
+                android:id="@+id/btnLog_Cosh"
                 style="?android:attr/borderlessButtonStyle"
                 android:layout_margin="2dp"
                 android:background="@drawable/round_button"
                 android:paddingTop="10dp"
                 android:paddingBottom="10dp"
                 android:text="@string/btn_log_label"
+                android:tag="log"
                 android:textAllCaps="false"
                 android:textColor="#37474F"
                 android:textSize="24sp" />
 
             <Button
-                android:id="@+id/btn1dxTanh"
+                android:id="@+id/btn1dX_Tanh"
                 style="?android:attr/borderlessButtonStyle"
                 android:layout_margin="2dp"
                 android:background="@drawable/round_button"
                 android:paddingTop="10dp"
                 android:paddingBottom="10dp"
                 android:text="@string/btn1dx"
+                android:tag="1/x"
                 android:textAllCaps="false"
                 android:textColor="#37474F"
                 android:textSize="24sp" />
@@ -309,37 +316,40 @@
         <TableRow>
 
             <Button
-                android:id="@+id/btnEn"
+                android:id="@+id/btnEPowersN_SinhPowersMinus1"
                 style="?android:attr/borderlessButtonStyle"
                 android:layout_margin="2dp"
                 android:background="@drawable/round_button"
                 android:paddingTop="10dp"
                 android:paddingBottom="10dp"
                 android:text="@string/btn_ex_label"
+                android:tag="e^n"
                 android:textAllCaps="false"
                 android:textColor="#37474F"
                 android:textSize="24sp" />
 
             <Button
-                android:id="@+id/btnX2"
+                android:id="@+id/btnXPowers2_CoshPowersMinus1"
                 style="?android:attr/borderlessButtonStyle"
                 android:layout_margin="2dp"
                 android:background="@drawable/round_button"
                 android:paddingTop="10dp"
                 android:paddingBottom="10dp"
                 android:text="@string/btn_x2_label"
+                android:tag="x^2"
                 android:textAllCaps="false"
                 android:textColor="#37474F"
                 android:textSize="24sp" />
 
             <Button
-                android:id="@+id/btnXn"
+                android:id="@+id/btnXPowersN_TanhPowersMinus1"
                 style="?android:attr/borderlessButtonStyle"
                 android:layout_margin="2dp"
                 android:background="@drawable/round_button"
                 android:paddingTop="10dp"
                 android:paddingBottom="10dp"
                 android:text="@string/btn_xn_label"
+                android:tag="x^n"
                 android:textAllCaps="false"
                 android:textColor="#37474F"
                 android:textSize="24sp" />
@@ -394,37 +404,40 @@
         <TableRow>
 
             <Button
-                android:id="@+id/btnAbsX"
+                android:id="@+id/btnAbsX_2PowersX"
                 style="?android:attr/borderlessButtonStyle"
                 android:layout_margin="2dp"
                 android:background="@drawable/round_button"
                 android:paddingTop="10dp"
                 android:paddingBottom="10dp"
                 android:text="@string/btn_absx_label"
+                android:tag="abs_x"
                 android:textAllCaps="false"
                 android:textColor="#37474F"
                 android:textSize="24sp" />
 
             <Button
-                android:id="@+id/btnPi"
+                android:id="@+id/btnPi_CubeOfX"
                 style="?android:attr/borderlessButtonStyle"
                 android:layout_margin="2dp"
                 android:background="@drawable/round_button"
                 android:paddingTop="10dp"
                 android:paddingBottom="10dp"
                 android:text="@string/btn_pi_label"
+                android:tag="pi"
                 android:textAllCaps="false"
                 android:textColor="#37474F"
                 android:textSize="24sp" />
             
             <Button
-                android:id="@+id/btnE"
+                android:id="@+id/btnE_FactorialOfX"
                 style="?android:attr/borderlessButtonStyle"
                 android:layout_margin="2dp"
                 android:background="@drawable/round_button"
                 android:paddingTop="10dp"
                 android:paddingBottom="10dp"
                 android:text="@string/btn_a_label"
+                android:tag="e"
                 android:textAllCaps="false"
                 android:textColor="#37474F"
                 android:textSize="24sp" />
