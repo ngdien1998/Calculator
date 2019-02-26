@@ -98,7 +98,7 @@
                 android:layout_margin="2dp"
                 android:background="@drawable/round_button"
                 android:text="@string/btn_clear_label"
-                android:textColor="#37474F"
+                android:textColor="#E53935"
                 android:textSize="@dimen/button_size_landscape" />
 
             <Button
@@ -108,7 +108,7 @@
                 android:layout_margin="2dp"
                 android:background="@drawable/round_button"
                 android:text="@string/btn_parentheses_label"
-                android:textColor="#37474F"
+                android:textColor="@color/colorPrimary"
                 android:textSize="@dimen/button_size_landscape" />
 
             <Button
@@ -118,7 +118,7 @@
                 android:layout_margin="2dp"
                 android:background="@drawable/round_button"
                 android:text="@string/btn_percent_label"
-                android:textColor="#37474F"
+                android:textColor="@color/colorPrimary"
                 android:textSize="@dimen/button_size_landscape" />
 
             <Button
@@ -128,7 +128,7 @@
                 android:layout_margin="2dp"
                 android:background="@drawable/round_button"
                 android:text="@string/btn_devide_label"
-                android:textColor="#37474F"
+                android:textColor="@color/colorPrimary"
                 android:textSize="@dimen/button_size_landscape" />
 
         </TableRow>
@@ -209,7 +209,7 @@
                 android:background="@drawable/round_button"
                 android:text="@string/btn_multifly_label"
                 android:textAllCaps="false"
-                android:textColor="#37474F"
+                android:textColor="@color/colorPrimary"
                 android:textSize="@dimen/button_size_landscape" />
 
 
@@ -289,7 +289,7 @@
                 android:layout_margin="2dp"
                 android:background="@drawable/round_button"
                 android:text="@string/btn_minus_label"
-                android:textColor="#37474F"
+                android:textColor="@color/colorPrimary"
                 android:textSize="@dimen/button_size_landscape" />
 
         </TableRow>
@@ -370,7 +370,7 @@
                 android:layout_margin="2dp"
                 android:background="@drawable/round_button"
                 android:text="@string/btn_plus_label"
-                android:textColor="#37474F"
+                android:textColor="@color/colorPrimary"
                 android:textSize="@dimen/button_size_landscape" />
 
         </TableRow>
@@ -449,9 +449,9 @@
                 style="?android:attr/borderlessButtonStyle"
                 android:layout_height="@dimen/button_height_landscape"
                 android:layout_margin="2dp"
-                android:background="@drawable/round_button"
+                android:background="@drawable/round_button_color_primary"
                 android:text="@string/btn_equal_label"
-                android:textColor="#37474F"
+                android:textColor="@android:color/white"
                 android:textSize="@dimen/button_size_landscape" />
 
         </TableRow>

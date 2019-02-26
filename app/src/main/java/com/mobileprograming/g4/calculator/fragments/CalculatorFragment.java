@@ -8,6 +8,7 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
+import android.widget.ImageButton;
 
 import com.mobileprograming.g4.calculator.R;
 
@@ -19,7 +20,8 @@ public class CalculatorFragment extends Fragment {
                    btnE_FactorialOfX, btnPi_CubeOfX, btnAbsX_2PowersX, btnXPowersN_TanhPowersMinus1,
                    btnXPowers2_CoshPowersMinus1, btnEPowersN_SinhPowersMinus1, btnLn_Sinh, btnLog_Cosh,
                    btn1DevideX_Tanh, btnTan_Arctan, btnCos_Arccos, btnSin_Arcsin, btnSquareRoot_CubeRoot,
-                   btnRad, btnMore, btnHistory, btnRotate, btnBackspace;
+                   btnRad, btnMore, btnHistory;
+    private ImageButton btnRotate, btnBackspace;
 
     private boolean mIsLanscape;
 
