@@ -21,6 +21,8 @@ import com.mobileprograming.g4.calculator.R;
 
 public class CalculatorFragment extends Fragment {
 
+    private static final String IS_ON_RAD_MODE = "mIsOnRadMode";
+
     private Button btnNum0, btnNum1, btnNum2, btnNum3, btnNum4, btnNum5, btnNum6, btnNum7, btnNum8, btnNum9,
             btnPlusMinus, btnEqual, btnPlus, btnMinus, btnMultifly, btnDevide,
             btnDot, btnPercent, btnParentheses, btnClear,
@@ -33,21 +35,27 @@ public class CalculatorFragment extends Fragment {
     private TextView txtResult;
     private TextView txtRad;
 
-    private boolean isPortrait;
-    AppCompatActivity parent = ((AppCompatActivity) getContext());
+    private boolean mIsPortrait;
+    private AppCompatActivity mParent;
+    private boolean mRadModeIsOn;
+    private boolean mIsOnRadMode;
 
     @Nullable
     @Override
-    public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
+    public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container,
+                             @Nullable Bundle savedInstanceState) {
         View view = inflater.inflate(R.layout.fragment_calculator, container, false);
 
-        isPortrait = getResources().getConfiguration().orientation == Configuration.ORIENTATION_PORTRAIT;
+        mParent = ((AppCompatActivity) getContext());
+        mIsPortrait = getResources().getConfiguration().orientation == Configuration.ORIENTATION_PORTRAIT;
 
         mapControls(view);
-        try {
-            addEvents();
-        } catch (Settings.SettingNotFoundException e) {
-            Log.e("ERROR_ROATATION", e.getMessage());
+        addEvents();
+
+        mIsOnRadMode = false;
+        // Check on the last session whether rad mode is saved or not?
+        if (savedInstanceState != null) {
+            mIsOnRadMode = savedInstanceState.getBoolean(IS_ON_RAD_MODE);
         }
 
         // Disable keyboard when focusing on the edittext
@@ -102,7 +110,7 @@ public class CalculatorFragment extends Fragment {
         btnMore = view.findViewById(R.id.btnMore);
     }
 
-    private void addEvents() throws Settings.SettingNotFoundException {
+    private void addEvents() {
         btnHistory.setOnClickListener(this::btnHistoryOnClick);
         btnBackspace.setOnClickListener(this::btnBackspaceOnClick);
 
@@ -127,7 +135,8 @@ public class CalculatorFragment extends Fragment {
         btnParentheses.setOnClickListener(this::btnParenthesesOnClick);
         btnClear.setOnClickListener(this::btnClearOnClick);
 
-        if (!isPortrait) {
+        if (!mIsPortrait) {
+            // Screen orientation is landscape
             btnE_FactorialOfX.setOnClickListener(this::btnE_FactorialOfXOnClick);
             btnPi_CubeOfX.setOnClickListener(this::btnPi_CubeOfXOnClick);
             btnAbsX_2PowersX.setOnClickListener(this::btnAbsX_2PowersXOnClick);
@@ -145,14 +154,25 @@ public class CalculatorFragment extends Fragment {
             btnMore.setOnClickListener(this::btnMoreOnClick);
         }
 
-        if (android.provider.Settings.System.getInt(parent.getContentResolver(), Settings.System.ACCELEROMETER_ROTATION) == 0) {
-            // System setting disables auto rotation
-            btnRotate.setOnClickListener(this::btnRotateOnClick);
-            btnRotate.setVisibility(View.INVISIBLE);
-        } else {
-            // Auto rotation is enabled
-            btnRotate.setVisibility(View.INVISIBLE);
+        try {
+            if (android.provider.Settings.System.getInt(mParent.getContentResolver(),
+                    Settings.System.ACCELEROMETER_ROTATION) == 0) {
+                // System setting disables auto rotation
+                btnRotate.setOnClickListener(this::btnRotateOnClick);
+                btnRotate.setVisibility(View.INVISIBLE);
+            } else {
+                // Auto rotation is enabled
+                btnRotate.setVisibility(View.INVISIBLE);
+            }
+        } catch (Settings.SettingNotFoundException e) {
+            Log.e("ERROR_ROTATION", e.getMessage());
         }
+    }
+
+    @Override
+    public void onSaveInstanceState(@NonNull Bundle outState) {
+        super.onSaveInstanceState(outState);
+        outState.putBoolean(IS_ON_RAD_MODE, mIsOnRadMode);
     }
 
     private void setExpression(String expression) {
@@ -175,11 +195,11 @@ public class CalculatorFragment extends Fragment {
     }
 
     private void btnRotateOnClick(View view) {
-        assert parent != null;
-        if (isPortrait) {
-            parent.setRequestedOrientation(ActivityInfo.SCREEN_ORIENTATION_LANDSCAPE);
+        assert mParent != null;
+        if (mIsPortrait) {
+            mParent.setRequestedOrientation(ActivityInfo.SCREEN_ORIENTATION_LANDSCAPE);
         } else {
-            parent.setRequestedOrientation(ActivityInfo.SCREEN_ORIENTATION_PORTRAIT);
+            mParent.setRequestedOrientation(ActivityInfo.SCREEN_ORIENTATION_PORTRAIT);
         }
     }
 
@@ -283,6 +303,12 @@ public class CalculatorFragment extends Fragment {
     }
 
     private void btnRadOnClick(View view) {
+        if (txtRad.getVisibility() == View.VISIBLE) {
+            txtRad.setVisibility(View.INVISIBLE);
+        } else {
+            txtRad.setVisibility(View.VISIBLE);
+        }
+        mRadModeIsOn = !mRadModeIsOn;
     }
 
     private void btnMoreOnClick(View view) {
