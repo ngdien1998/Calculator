@@ -39,4 +39,8 @@
     <string name="btn_pi_label">π</string>
     <string name="btn_a_label">e</string>
     <string name="edt_expression_hint">Expression</string>
+
+    <!-- TODO: Remove or change this placeholder text -->
+    <string name="hello_blank_fragment">Hello blank fragment</string>
+    <string name="txt_rad_text">RAD</string>
 </resources>

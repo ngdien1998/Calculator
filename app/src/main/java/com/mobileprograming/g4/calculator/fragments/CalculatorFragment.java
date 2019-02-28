@@ -1,5 +1,6 @@
 package com.mobileprograming.g4.calculator.fragments;
 
+import android.content.res.Configuration;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
@@ -8,32 +9,37 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
+import android.widget.EditText;
 import android.widget.ImageButton;
+import android.widget.TextView;
 
 import com.mobileprograming.g4.calculator.R;
 
 public class CalculatorFragment extends Fragment {
 
     private Button btnNum0, btnNum1, btnNum2, btnNum3, btnNum4, btnNum5, btnNum6, btnNum7, btnNum8, btnNum9,
-                   btnPlusMinus, btnEqual, btnPlus, btnMinus, btnMultifly, btnDevide,
-                   btnDot, btnPercent, btnParentheses, btnClear,
-                   btnE_FactorialOfX, btnPi_CubeOfX, btnAbsX_2PowersX, btnXPowersN_TanhPowersMinus1,
-                   btnXPowers2_CoshPowersMinus1, btnEPowersN_SinhPowersMinus1, btnLn_Sinh, btnLog_Cosh,
-                   btn1DevideX_Tanh, btnTan_Arctan, btnCos_Arccos, btnSin_Arcsin, btnSquareRoot_CubeRoot,
-                   btnRad, btnMore, btnHistory;
+            btnPlusMinus, btnEqual, btnPlus, btnMinus, btnMultifly, btnDevide,
+            btnDot, btnPercent, btnParentheses, btnClear,
+            btnE_FactorialOfX, btnPi_CubeOfX, btnAbsX_2PowersX, btnXPowersN_TanhPowersMinus1,
+            btnXPowers2_CoshPowersMinus1, btnEPowersN_SinhPowersMinus1, btnLn_Sinh, btnLog_Cosh,
+            btn1DevideX_Tanh, btnTan_Arctan, btnCos_Arccos, btnSin_Arcsin, btnSquareRoot_CubeRoot,
+            btnRad, btnMore, btnHistory;
     private ImageButton btnRotate, btnBackspace;
-
-    private boolean mIsLanscape;
+    private EditText edtExpression;
+    private TextView txtResult;
+    private TextView txtRad;
 
     @Nullable
     @Override
-    public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
+    public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container,
+                             @Nullable Bundle savedInstanceState) {
         View view = inflater.inflate(R.layout.fragment_calculator, container, false);
-
-        mIsLanscape = false;
 
         mapControls(view);
         addEvents();
+
+        // Disable keyboard when focusing on the edittext
+        edtExpression.setShowSoftInputOnFocus(false);
 
         return view;
     }
@@ -42,6 +48,9 @@ public class CalculatorFragment extends Fragment {
         btnHistory = view.findViewById(R.id.btnHistory);
         btnRotate = view.findViewById(R.id.btnRotate);
         btnBackspace = view.findViewById(R.id.btnBackspace);
+        edtExpression = view.findViewById(R.id.edtExpression);
+        txtResult = view.findViewById(R.id.txtResult);
+        txtRad = view.findViewById(R.id.txtRad);
 
         btnNum0 = view.findViewById(R.id.btnNum0);
         btnNum1 = view.findViewById(R.id.btnNum1);
@@ -79,10 +88,6 @@ public class CalculatorFragment extends Fragment {
         btnSquareRoot_CubeRoot = view.findViewById(R.id.btnSquareRoot_CubeRoot);
         btnRad = view.findViewById(R.id.btnRad);
         btnMore = view.findViewById(R.id.btnMore);
-
-        if (btnMore != null) {
-            mIsLanscape = true;
-        }
     }
 
     private void addEvents() {
@@ -111,7 +116,7 @@ public class CalculatorFragment extends Fragment {
         btnParentheses.setOnClickListener(this::btnParenthesesOnClick);
         btnClear.setOnClickListener(this::btnClearOnClick);
 
-        if (mIsLanscape) {
+        if (getResources().getConfiguration().orientation == Configuration.ORIENTATION_LANDSCAPE) {
             btnE_FactorialOfX.setOnClickListener(this::btnE_FactorialOfXOnClick);
             btnPi_CubeOfX.setOnClickListener(this::btnPi_CubeOfXOnClick);
             btnAbsX_2PowersX.setOnClickListener(this::btnAbsX_2PowersXOnClick);
@@ -128,6 +133,18 @@ public class CalculatorFragment extends Fragment {
             btnRad.setOnClickListener(this::btnRadOnClick);
             btnMore.setOnClickListener(this::btnMoreOnClick);
         }
+    }
+
+    private void setExpression(String expression) {
+        edtExpression.setText(expression);
+    }
+
+    private String getExpression() {
+        return edtExpression.getText().toString();
+    }
+
+    private int getCursorPosition() {
+        return edtExpression.getSelectionStart();
     }
 
     private void btnBackspaceOnClick(View view) {

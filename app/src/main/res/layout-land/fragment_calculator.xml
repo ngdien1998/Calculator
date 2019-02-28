@@ -8,17 +8,29 @@
     android:background="@android:color/white"
     tools:context=".fragments.CalculatorFragment">
 
-    <EditText
-        android:id="@+id/edtExpression"
+    <LinearLayout
+        android:orientation="vertical"
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_gravity="top"
-        android:background="@android:color/white"
-        android:inputType="text"
-        android:hint="@string/edt_expression_hint"
-        android:importantForAutofill="no"
-        tools:targetApi="o"
-        tools:ignore="LabelFor" />
+        android:layout_height="wrap_content">
+
+        <EditText
+            android:id="@+id/edtExpression"
+            android:layout_gravity="top"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:background="@android:color/white"
+            tools:targetApi="o"
+            android:hint="@string/edt_expression_hint"
+            android:inputType="text"
+            android:autofillHints="no" />
+
+        <TextView
+            android:id="@+id/txtResult"
+            android:layout_gravity="end"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content" />
+
+    </LinearLayout>
 
     <TableLayout
         android:gravity="bottom"

@@ -50,11 +50,11 @@
     </LinearLayout>
 
     <TableLayout
-        android:layout_width="match_parent"
-        android:layout_height="match_parent"
         android:gravity="bottom"
         android:shrinkColumns="*"
-        android:stretchColumns="*">
+        android:stretchColumns="*"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent">
 
         <TableRow>
 
@@ -70,17 +70,17 @@
                 android:id="@+id/btnRotate"
                 style="?android:attr/borderlessButtonStyle"
                 android:layout_margin="2dp"
-                android:contentDescription="@string/btn_rotate_desc"
-                android:src="@drawable/ic_screen_rotation_24dp" />
+                android:src="@drawable/ic_screen_rotation_24dp"
+                android:contentDescription="@string/btn_rotate_desc" />
 
             <ImageButton
+                android:layout_column="3"
                 android:id="@+id/btnBackspace"
                 style="?android:attr/borderlessButtonStyle"
-                android:layout_column="3"
                 android:layout_margin="2dp"
-                android:contentDescription="@string/btn_backspace_label"
                 android:src="@drawable/ic_backspace_24dp"
-                android:textColor="#37474F" />
+                android:textColor="#37474F"
+                android:contentDescription="@string/btn_backspace_label" />
 
         </TableRow>
 
@@ -218,14 +218,14 @@
 
             <Button
                 android:id="@+id/btnMinus"
-                style="?android:attr/borderlessButtonStyle"
+                android:text="@string/btn_minus_label"
                 android:layout_margin="2dp"
-                android:background="@drawable/round_button"
+                android:textSize="32sp"
+                android:textColor="@color/colorPrimary"
                 android:paddingTop="16dp"
                 android:paddingBottom="16dp"
-                android:text="@string/btn_minus_label"
-                android:textColor="@color/colorPrimary"
-                android:textSize="32sp" />
+                style="?android:attr/borderlessButtonStyle"
+                android:background="@drawable/round_button" />
 
         </TableRow>
 
@@ -266,14 +266,14 @@
 
             <Button
                 android:id="@+id/btnPlus"
-                style="?android:attr/borderlessButtonStyle"
+                android:text="@string/btn_plus_label"
                 android:layout_margin="2dp"
-                android:background="@drawable/round_button"
+                android:textSize="32sp"
+                android:textColor="@color/colorPrimary"
                 android:paddingTop="16dp"
                 android:paddingBottom="16dp"
-                android:text="@string/btn_plus_label"
-                android:textColor="@color/colorPrimary"
-                android:textSize="32sp" />
+                style="?android:attr/borderlessButtonStyle"
+                android:background="@drawable/round_button" />
 
         </TableRow>
 
@@ -303,25 +303,25 @@
 
             <Button
                 android:id="@+id/btnPlusMinus"
-                style="?android:attr/borderlessButtonStyle"
+                android:text="@string/btn_plus_minus_label"
                 android:layout_margin="2dp"
-                android:background="@drawable/round_button"
+                android:textSize="32sp"
+                android:textColor="#37474F"
                 android:paddingTop="16dp"
                 android:paddingBottom="16dp"
-                android:text="@string/btn_plus_minus_label"
-                android:textColor="#37474F"
-                android:textSize="32sp" />
+                style="?android:attr/borderlessButtonStyle"
+                android:background="@drawable/round_button" />
 
             <Button
                 android:id="@+id/btnEqual"
-                style="?android:attr/borderlessButtonStyle"
+                android:text="@string/btn_equal_label"
                 android:layout_margin="2dp"
-                android:background="@drawable/round_button_color_primary"
+                android:textSize="32sp"
+                android:textColor="@android:color/white"
                 android:paddingTop="16dp"
                 android:paddingBottom="16dp"
-                android:text="@string/btn_equal_label"
-                android:textColor="@android:color/white"
-                android:textSize="32sp" />
+                style="?android:attr/borderlessButtonStyle"
+                android:background="@drawable/round_button_color_primary" />
 
         </TableRow>
 
