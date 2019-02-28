@@ -1,10 +1,14 @@
 package com.mobileprograming.g4.calculator.fragments;
 
+import android.content.pm.ActivityInfo;
 import android.content.res.Configuration;
 import android.os.Bundle;
+import android.provider.Settings;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
+import android.support.v7.app.AppCompatActivity;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -29,14 +33,22 @@ public class CalculatorFragment extends Fragment {
     private TextView txtResult;
     private TextView txtRad;
 
+    private boolean isPortrait;
+    AppCompatActivity parent = ((AppCompatActivity) getContext());
+
     @Nullable
     @Override
-    public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container,
-                             @Nullable Bundle savedInstanceState) {
+    public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
         View view = inflater.inflate(R.layout.fragment_calculator, container, false);
 
+        isPortrait = getResources().getConfiguration().orientation == Configuration.ORIENTATION_PORTRAIT;
+
         mapControls(view);
-        addEvents();
+        try {
+            addEvents();
+        } catch (Settings.SettingNotFoundException e) {
+            Log.e("ERROR_ROATATION", e.getMessage());
+        }
 
         // Disable keyboard when focusing on the edittext
         edtExpression.setShowSoftInputOnFocus(false);
@@ -90,9 +102,8 @@ public class CalculatorFragment extends Fragment {
         btnMore = view.findViewById(R.id.btnMore);
     }
 
-    private void addEvents() {
+    private void addEvents() throws Settings.SettingNotFoundException {
         btnHistory.setOnClickListener(this::btnHistoryOnClick);
-        btnRotate.setOnClickListener(this::btnRotateOnClick);
         btnBackspace.setOnClickListener(this::btnBackspaceOnClick);
 
         btnNum0.setOnClickListener(this::btnNum0OnClick);
@@ -116,7 +127,7 @@ public class CalculatorFragment extends Fragment {
         btnParentheses.setOnClickListener(this::btnParenthesesOnClick);
         btnClear.setOnClickListener(this::btnClearOnClick);
 
-        if (getResources().getConfiguration().orientation == Configuration.ORIENTATION_LANDSCAPE) {
+        if (!isPortrait) {
             btnE_FactorialOfX.setOnClickListener(this::btnE_FactorialOfXOnClick);
             btnPi_CubeOfX.setOnClickListener(this::btnPi_CubeOfXOnClick);
             btnAbsX_2PowersX.setOnClickListener(this::btnAbsX_2PowersXOnClick);
@@ -133,6 +144,15 @@ public class CalculatorFragment extends Fragment {
             btnRad.setOnClickListener(this::btnRadOnClick);
             btnMore.setOnClickListener(this::btnMoreOnClick);
         }
+
+        if (android.provider.Settings.System.getInt(parent.getContentResolver(), Settings.System.ACCELEROMETER_ROTATION) == 0) {
+            // System setting disables auto rotation
+            btnRotate.setOnClickListener(this::btnRotateOnClick);
+            btnRotate.setVisibility(View.INVISIBLE);
+        } else {
+            // Auto rotation is enabled
+            btnRotate.setVisibility(View.INVISIBLE);
+        }
     }
 
     private void setExpression(String expression) {
@@ -147,10 +167,20 @@ public class CalculatorFragment extends Fragment {
         return edtExpression.getSelectionStart();
     }
 
+    private void setResult(double result) {
+        txtResult.setText(String.valueOf(result));
+    }
+
     private void btnBackspaceOnClick(View view) {
     }
 
     private void btnRotateOnClick(View view) {
+        assert parent != null;
+        if (isPortrait) {
+            parent.setRequestedOrientation(ActivityInfo.SCREEN_ORIENTATION_LANDSCAPE);
+        } else {
+            parent.setRequestedOrientation(ActivityInfo.SCREEN_ORIENTATION_PORTRAIT);
+        }
     }
 
     private void btnHistoryOnClick(View view) {
