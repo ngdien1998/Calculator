@@ -41,14 +41,13 @@
 
         <TableRow>
 
-            <Button
+            <ImageButton
                 android:id="@+id/btnHistory"
                 style="?android:attr/borderlessButtonStyle"
                 android:layout_height="@dimen/button_height_landscape"
+                android:src="@drawable/ic_history"
                 android:layout_margin="2dp"
-                android:text="@string/btn_history_label"
-                android:textColor="#37474F"
-                android:textSize="18sp" />
+                android:contentDescription="@string/btn_history_desc" />
 
             <ImageButton
                 android:id="@+id/btnRotate"
@@ -77,7 +76,7 @@
                 style="?android:attr/borderlessButtonStyle"
                 android:layout_height="@dimen/button_height_landscape"
                 android:layout_margin="2dp"
-                android:background="@drawable/round_button"
+                android:background="@drawable/btn_round_color_primary_lt2"
                 android:text="@string/btn_more_label"
                 android:textColor="#37474F"
                 android:textSize="@dimen/button_size_landscape" />
@@ -87,7 +86,7 @@
                 style="?android:attr/borderlessButtonStyle"
                 android:layout_height="@dimen/button_height_landscape"
                 android:layout_margin="2dp"
-                android:background="@drawable/round_button"
+                android:background="@drawable/btn_round_color_primary_lt2"
                 android:text="@string/btn_rad_label"
                 android:textColor="#37474F"
                 android:textSize="@dimen/button_size_landscape" />
@@ -97,7 +96,7 @@
                 style="?android:attr/borderlessButtonStyle"
                 android:layout_height="@dimen/button_height_landscape"
                 android:layout_margin="2dp"
-                android:background="@drawable/round_button"
+                android:background="@drawable/btn_round_color_primary_lt2"
                 android:tag="square_root"
                 android:text="@string/btn_sqrt_label"
                 android:textColor="#37474F"
@@ -108,7 +107,7 @@
                 style="?android:attr/borderlessButtonStyle"
                 android:layout_height="@dimen/button_height_landscape"
                 android:layout_margin="2dp"
-                android:background="@drawable/round_button"
+                android:background="@drawable/btn_round"
                 android:text="@string/btn_clear_label"
                 android:textColor="#E53935"
                 android:textSize="@dimen/button_size_landscape" />
@@ -118,9 +117,9 @@
                 style="?android:attr/borderlessButtonStyle"
                 android:layout_height="@dimen/button_height_landscape"
                 android:layout_margin="2dp"
-                android:background="@drawable/round_button"
+                android:background="@drawable/btn_round_color_primary_lt1"
                 android:text="@string/btn_parentheses_label"
-                android:textColor="@color/colorPrimary"
+                android:textColor="@color/colorPrimaryDark"
                 android:textSize="@dimen/button_size_landscape" />
 
             <Button
@@ -128,9 +127,9 @@
                 style="?android:attr/borderlessButtonStyle"
                 android:layout_height="@dimen/button_height_landscape"
                 android:layout_margin="2dp"
-                android:background="@drawable/round_button"
+                android:background="@drawable/btn_round_color_primary_lt1"
                 android:text="@string/btn_percent_label"
-                android:textColor="@color/colorPrimary"
+                android:textColor="@color/colorPrimaryDark"
                 android:textSize="@dimen/button_size_landscape" />
 
             <Button
@@ -138,9 +137,9 @@
                 style="?android:attr/borderlessButtonStyle"
                 android:layout_height="@dimen/button_height_landscape"
                 android:layout_margin="2dp"
-                android:background="@drawable/round_button"
+                android:background="@drawable/btn_round_color_primary_lt1"
                 android:text="@string/btn_devide_label"
-                android:textColor="@color/colorPrimary"
+                android:textColor="@color/colorPrimaryDark"
                 android:textSize="@dimen/button_size_landscape" />
 
         </TableRow>
@@ -152,7 +151,7 @@
                 style="?android:attr/borderlessButtonStyle"
                 android:layout_height="@dimen/button_height_landscape"
                 android:layout_margin="2dp"
-                android:background="@drawable/round_button"
+                android:background="@drawable/btn_round_color_primary_lt2"
                 android:tag="sin"
                 android:text="@string/btn_sin_label"
                 android:textAllCaps="false"
@@ -164,7 +163,7 @@
                 style="?android:attr/borderlessButtonStyle"
                 android:layout_height="@dimen/button_height_landscape"
                 android:layout_margin="2dp"
-                android:background="@drawable/round_button"
+                android:background="@drawable/btn_round_color_primary_lt2"
                 android:tag="cos"
                 android:text="@string/btn_cos_lalbel"
                 android:textAllCaps="false"
@@ -176,7 +175,7 @@
                 style="?android:attr/borderlessButtonStyle"
                 android:layout_height="@dimen/button_height_landscape"
                 android:layout_margin="2dp"
-                android:background="@drawable/round_button"
+                android:background="@drawable/btn_round_color_primary_lt2"
                 android:tag="tan"
                 android:text="@string/btn_tan_label"
                 android:textAllCaps="false"
@@ -188,7 +187,7 @@
                 style="?android:attr/borderlessButtonStyle"
                 android:layout_height="@dimen/button_height_landscape"
                 android:layout_margin="2dp"
-                android:background="@drawable/round_button"
+                android:background="@drawable/btn_round"
                 android:text="@string/btn_num7_label"
                 android:textColor="#37474F"
                 android:textSize="@dimen/button_size_landscape" />
@@ -198,7 +197,7 @@
                 style="?android:attr/borderlessButtonStyle"
                 android:layout_height="@dimen/button_height_landscape"
                 android:layout_margin="2dp"
-                android:background="@drawable/round_button"
+                android:background="@drawable/btn_round"
                 android:text="@string/btn_num8_label"
                 android:textColor="#37474F"
                 android:textSize="@dimen/button_size_landscape" />
@@ -208,7 +207,7 @@
                 style="?android:attr/borderlessButtonStyle"
                 android:layout_height="@dimen/button_height_landscape"
                 android:layout_margin="2dp"
-                android:background="@drawable/round_button"
+                android:background="@drawable/btn_round"
                 android:text="@string/btn_num9_label"
                 android:textColor="#37474F"
                 android:textSize="@dimen/button_size_landscape" />
@@ -218,10 +217,10 @@
                 style="?android:attr/borderlessButtonStyle"
                 android:layout_height="@dimen/button_height_landscape"
                 android:layout_margin="2dp"
-                android:background="@drawable/round_button"
+                android:background="@drawable/btn_round_color_primary_lt1"
                 android:text="@string/btn_multifly_label"
                 android:textAllCaps="false"
-                android:textColor="@color/colorPrimary"
+                android:textColor="@color/colorPrimaryDark"
                 android:textSize="@dimen/button_size_landscape" />
 
 
@@ -234,7 +233,7 @@
                 style="?android:attr/borderlessButtonStyle"
                 android:layout_height="@dimen/button_height_landscape"
                 android:layout_margin="2dp"
-                android:background="@drawable/round_button"
+                android:background="@drawable/btn_round_color_primary_lt2"
                 android:text="@string/btn_ln_label"
                 android:textAllCaps="false"
                 android:textColor="#37474F"
@@ -245,7 +244,7 @@
                 style="?android:attr/borderlessButtonStyle"
                 android:layout_height="@dimen/button_height_landscape"
                 android:layout_margin="2dp"
-                android:background="@drawable/round_button"
+                android:background="@drawable/btn_round_color_primary_lt2"
                 android:text="@string/btn_log_label"
                 android:textAllCaps="false"
                 android:textColor="#37474F"
@@ -256,7 +255,7 @@
                 style="?android:attr/borderlessButtonStyle"
                 android:layout_height="@dimen/button_height_landscape"
                 android:layout_margin="2dp"
-                android:background="@drawable/round_button"
+                android:background="@drawable/btn_round_color_primary_lt2"
                 android:tag="1/x"
                 android:text="@string/btn1dx"
                 android:textAllCaps="false"
@@ -268,7 +267,7 @@
                 style="?android:attr/borderlessButtonStyle"
                 android:layout_height="@dimen/button_height_landscape"
                 android:layout_margin="2dp"
-                android:background="@drawable/round_button"
+                android:background="@drawable/btn_round"
                 android:text="@string/btn_num4_label"
                 android:textAllCaps="false"
                 android:textColor="#37474F"
@@ -279,7 +278,7 @@
                 style="?android:attr/borderlessButtonStyle"
                 android:layout_height="@dimen/button_height_landscape"
                 android:layout_margin="2dp"
-                android:background="@drawable/round_button"
+                android:background="@drawable/btn_round"
                 android:text="@string/btn_num5_label"
                 android:textColor="#37474F"
                 android:textSize="@dimen/button_size_landscape" />
@@ -289,7 +288,7 @@
                 style="?android:attr/borderlessButtonStyle"
                 android:layout_height="@dimen/button_height_landscape"
                 android:layout_margin="2dp"
-                android:background="@drawable/round_button"
+                android:background="@drawable/btn_round"
                 android:text="@string/btn_num6_label"
                 android:textColor="#37474F"
                 android:textSize="@dimen/button_size_landscape" />
@@ -299,9 +298,9 @@
                 style="?android:attr/borderlessButtonStyle"
                 android:layout_height="@dimen/button_height_landscape"
                 android:layout_margin="2dp"
-                android:background="@drawable/round_button"
+                android:background="@drawable/btn_round_color_primary_lt1"
                 android:text="@string/btn_minus_label"
-                android:textColor="@color/colorPrimary"
+                android:textColor="@color/colorPrimaryDark"
                 android:textSize="@dimen/button_size_landscape" />
 
         </TableRow>
@@ -313,7 +312,7 @@
                 style="?android:attr/borderlessButtonStyle"
                 android:layout_height="@dimen/button_height_landscape"
                 android:layout_margin="2dp"
-                android:background="@drawable/round_button"
+                android:background="@drawable/btn_round_color_primary_lt2"
                 android:tag="e^n"
                 android:text="@string/btn_ex_label"
                 android:textAllCaps="false"
@@ -325,7 +324,7 @@
                 style="?android:attr/borderlessButtonStyle"
                 android:layout_height="@dimen/button_height_landscape"
                 android:layout_margin="2dp"
-                android:background="@drawable/round_button"
+                android:background="@drawable/btn_round_color_primary_lt2"
                 android:tag="x^2"
                 android:text="@string/btn_x2_label"
                 android:textAllCaps="false"
@@ -337,7 +336,7 @@
                 style="?android:attr/borderlessButtonStyle"
                 android:layout_height="@dimen/button_height_landscape"
                 android:layout_margin="2dp"
-                android:background="@drawable/round_button"
+                android:background="@drawable/btn_round_color_primary_lt2"
                 android:tag="x^n"
                 android:text="@string/btn_xn_label"
                 android:textAllCaps="false"
@@ -349,7 +348,7 @@
                 style="?android:attr/borderlessButtonStyle"
                 android:layout_height="@dimen/button_height_landscape"
                 android:layout_margin="2dp"
-                android:background="@drawable/round_button"
+                android:background="@drawable/btn_round"
                 android:text="@string/btn_num1_label"
                 android:textAllCaps="false"
                 android:textColor="#37474F"
@@ -360,7 +359,7 @@
                 style="?android:attr/borderlessButtonStyle"
                 android:layout_height="@dimen/button_height_landscape"
                 android:layout_margin="2dp"
-                android:background="@drawable/round_button"
+                android:background="@drawable/btn_round"
                 android:text="@string/btn_num2_label"
                 android:textColor="#37474F"
                 android:textSize="@dimen/button_size_landscape" />
@@ -370,7 +369,7 @@
                 style="?android:attr/borderlessButtonStyle"
                 android:layout_height="@dimen/button_height_landscape"
                 android:layout_margin="2dp"
-                android:background="@drawable/round_button"
+                android:background="@drawable/btn_round"
                 android:text="@string/btn_num3_label"
                 android:textColor="#37474F"
                 android:textSize="@dimen/button_size_landscape" />
@@ -380,9 +379,9 @@
                 style="?android:attr/borderlessButtonStyle"
                 android:layout_height="@dimen/button_height_landscape"
                 android:layout_margin="2dp"
-                android:background="@drawable/round_button"
+                android:background="@drawable/btn_round_color_primary_lt1"
                 android:text="@string/btn_plus_label"
-                android:textColor="@color/colorPrimary"
+                android:textColor="@color/colorPrimaryDark"
                 android:textSize="@dimen/button_size_landscape" />
 
         </TableRow>
@@ -394,7 +393,7 @@
                 style="?android:attr/borderlessButtonStyle"
                 android:layout_height="@dimen/button_height_landscape"
                 android:layout_margin="2dp"
-                android:background="@drawable/round_button"
+                android:background="@drawable/btn_round_color_primary_lt2"
                 android:tag="abs_x"
                 android:text="@string/btn_absx_label"
                 android:textAllCaps="false"
@@ -406,7 +405,7 @@
                 style="?android:attr/borderlessButtonStyle"
                 android:layout_height="@dimen/button_height_landscape"
                 android:layout_margin="2dp"
-                android:background="@drawable/round_button"
+                android:background="@drawable/btn_round_color_primary_lt2"
                 android:tag="pi"
                 android:text="@string/btn_pi_label"
                 android:textAllCaps="false"
@@ -418,7 +417,7 @@
                 style="?android:attr/borderlessButtonStyle"
                 android:layout_height="@dimen/button_height_landscape"
                 android:layout_margin="2dp"
-                android:background="@drawable/round_button"
+                android:background="@drawable/btn_round_color_primary_lt2"
                 android:tag="e"
                 android:text="@string/btn_a_label"
                 android:textAllCaps="false"
@@ -430,7 +429,7 @@
                 style="?android:attr/borderlessButtonStyle"
                 android:layout_height="@dimen/button_height_landscape"
                 android:layout_margin="2dp"
-                android:background="@drawable/round_button"
+                android:background="@drawable/btn_round"
                 android:text="@string/btn_dot_label"
                 android:textAllCaps="false"
                 android:textColor="#37474F"
@@ -441,7 +440,7 @@
                 style="?android:attr/borderlessButtonStyle"
                 android:layout_height="@dimen/button_height_landscape"
                 android:layout_margin="2dp"
-                android:background="@drawable/round_button"
+                android:background="@drawable/btn_round"
                 android:text="@string/btn_num0_label"
                 android:textColor="#37474F"
                 android:textSize="@dimen/button_size_landscape" />
@@ -451,7 +450,7 @@
                 style="?android:attr/borderlessButtonStyle"
                 android:layout_height="@dimen/button_height_landscape"
                 android:layout_margin="2dp"
-                android:background="@drawable/round_button"
+                android:background="@drawable/btn_round"
                 android:text="@string/btn_plus_minus_label"
                 android:textColor="#37474F"
                 android:textSize="@dimen/button_size_landscape" />
@@ -461,7 +460,7 @@
                 style="?android:attr/borderlessButtonStyle"
                 android:layout_height="@dimen/button_height_landscape"
                 android:layout_margin="2dp"
-                android:background="@drawable/round_button_color_primary"
+                android:background="@drawable/btn_round_color_primary"
                 android:text="@string/btn_equal_label"
                 android:textColor="@android:color/white"
                 android:textSize="@dimen/button_size_landscape" />

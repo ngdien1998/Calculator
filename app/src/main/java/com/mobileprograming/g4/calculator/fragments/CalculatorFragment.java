@@ -1,5 +1,6 @@
 package com.mobileprograming.g4.calculator.fragments;
 
+import android.content.Intent;
 import android.content.pm.ActivityInfo;
 import android.content.res.Configuration;
 import android.os.Bundle;
@@ -29,8 +30,8 @@ public class CalculatorFragment extends Fragment {
             btnE_FactorialOfX, btnPi_CubeOfX, btnAbsX_2PowersX, btnXPowersN_TanhPowersMinus1,
             btnXPowers2_CoshPowersMinus1, btnEPowersN_SinhPowersMinus1, btnLn_Sinh, btnLog_Cosh,
             btn1DevideX_Tanh, btnTan_Arctan, btnCos_Arccos, btnSin_Arcsin, btnSquareRoot_CubeRoot,
-            btnRad, btnMore, btnHistory;
-    private ImageButton btnRotate, btnBackspace;
+            btnRad, btnMore;
+    private ImageButton btnRotate, btnBackspace, btnHistory;
     private EditText edtExpression;
     private TextView txtResult;
     private TextView txtRad;
@@ -38,7 +39,6 @@ public class CalculatorFragment extends Fragment {
     private boolean mIsPortrait;
     private AppCompatActivity mParent;
     private boolean mRadModeIsOn;
-    private boolean mIsOnRadMode;
 
     @Nullable
     @Override
@@ -52,10 +52,10 @@ public class CalculatorFragment extends Fragment {
         mapControls(view);
         addEvents();
 
-        mIsOnRadMode = false;
+        mRadModeIsOn = false;
         // Check on the last session whether rad mode is saved or not?
         if (savedInstanceState != null) {
-            mIsOnRadMode = savedInstanceState.getBoolean(IS_ON_RAD_MODE);
+            mRadModeIsOn = savedInstanceState.getBoolean(IS_ON_RAD_MODE);
         }
 
         // Disable keyboard when focusing on the edittext
@@ -64,6 +64,10 @@ public class CalculatorFragment extends Fragment {
         return view;
     }
 
+    /**
+     * Mapping view controls from view to activity
+     * @param view View that contains mapped view controls
+     */
     private void mapControls(View view) {
         btnHistory = view.findViewById(R.id.btnHistory);
         btnRotate = view.findViewById(R.id.btnRotate);
@@ -110,6 +114,7 @@ public class CalculatorFragment extends Fragment {
         btnMore = view.findViewById(R.id.btnMore);
     }
 
+    /** Add events for view controls */
     private void addEvents() {
         btnHistory.setOnClickListener(this::btnHistoryOnClick);
         btnBackspace.setOnClickListener(this::btnBackspaceOnClick);
@@ -159,7 +164,7 @@ public class CalculatorFragment extends Fragment {
                     Settings.System.ACCELEROMETER_ROTATION) == 0) {
                 // System setting disables auto rotation
                 btnRotate.setOnClickListener(this::btnRotateOnClick);
-                btnRotate.setVisibility(View.INVISIBLE);
+                btnRotate.setVisibility(View.VISIBLE);
             } else {
                 // Auto rotation is enabled
                 btnRotate.setVisibility(View.INVISIBLE);
@@ -172,28 +177,42 @@ public class CalculatorFragment extends Fragment {
     @Override
     public void onSaveInstanceState(@NonNull Bundle outState) {
         super.onSaveInstanceState(outState);
-        outState.putBoolean(IS_ON_RAD_MODE, mIsOnRadMode);
+        outState.putBoolean(IS_ON_RAD_MODE, mRadModeIsOn);
     }
 
+    /** Set expression for textview txtExpression */
     private void setExpression(String expression) {
         edtExpression.setText(expression);
     }
 
+    /** Get expression from textview txtExpression */
     private String getExpression() {
         return edtExpression.getText().toString();
     }
 
+    /** Get current cursor position from textview txtExpression */
     private int getCursorPosition() {
         return edtExpression.getSelectionStart();
     }
 
-    private void setResult(double result) {
-        txtResult.setText(String.valueOf(result));
+    /** Set result for textview txtResult */
+    private void setResult(String result) {
+        txtResult.setText(result);
     }
 
+    /**
+     * Handle button btnRotate click event
+     * @param view btnBackspace
+     */
     private void btnBackspaceOnClick(View view) {
+        String ex = getExpression();
+        setExpression(ex.substring(0, ex.length() - 2));
     }
 
+    /**
+     * Handle button btnRotate click event
+     * @param view btnRotate
+     */
     private void btnRotateOnClick(View view) {
         assert mParent != null;
         if (mIsPortrait) {
@@ -302,8 +321,12 @@ public class CalculatorFragment extends Fragment {
     private void btnSquareRoot_CubeRootOnClick(View view) {
     }
 
+    /**
+     * Handle buttun btnRad click event
+     * @param view btnRad
+     */
     private void btnRadOnClick(View view) {
-        if (txtRad.getVisibility() == View.VISIBLE) {
+        if (mRadModeIsOn) {
             txtRad.setVisibility(View.INVISIBLE);
         } else {
             txtRad.setVisibility(View.VISIBLE);
