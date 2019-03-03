@@ -11,7 +11,7 @@
         <TextView
             android:id="@+id/txtTitle"
             android:maxWidth="400dp"
-            android:textSize="20sp"
+            android:textSize="16sp"
             android:textColor="@color/colorPrimary"
             android:textStyle="bold" />
 
@@ -25,6 +25,7 @@
 
         <TextView
             android:id="@+id/txtTime"
+            android:textSize="12sp"
             android:layout_gravity="top"
             android:gravity="top"
             android:textAlignment="inherit" />

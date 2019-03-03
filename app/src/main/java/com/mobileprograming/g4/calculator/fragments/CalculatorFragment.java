@@ -60,14 +60,14 @@ public class CalculatorFragment extends Fragment {
         }
 
         // Disable keyboard when focusing on the edittext
-        edtExpression.setShowSoftInputOnFocus(false);
+        //edtExpression.setShowSoftInputOnFocus(false);
 
         return view;
     }
 
     /**
      * Mapping view controls from view to activity
-     * @param view View that contains mapped view controls
+
      */
     private void mapControls(View view) {
         btnHistory = view.findViewById(R.id.btnHistory);
