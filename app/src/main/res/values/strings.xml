@@ -34,14 +34,14 @@
     <string name="btn_minus_label">−</string>
     <string name="btn_ex_label">eⁿ</string>
     <string name="btn_x2_label">x²</string>
+    <string name="btn_x3_label">x³</string>
     <string name="btn_xn_label">xⁿ</string>
     <string name="btn_absx_label">|x|</string>
     <string name="btn_pi_label">π</string>
     <string name="btn_a_label">e</string>
     <string name="edt_expression_hint">Expression</string>
-
-    <!-- TODO: Remove or change this placeholder text -->
-    <string name="hello_blank_fragment">Hello blank fragment</string>
     <string name="txt_rad_text">RAD</string>
     <string name="btn_history_desc">History</string>
+    <string name="clear_all_saved_expressions">Clear all saved expressions</string>
+    <string name="clear_all_expressions">Clear all expressions</string>
 </resources>
