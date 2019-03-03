@@ -7,6 +7,7 @@ import android.support.v7.app.AppCompatActivity;
 import android.widget.Toast;
 
 import com.mobileprograming.g4.calculator.fragments.CalculatorFragment;
+import com.mobileprograming.g4.calculator.models.HistoryExpression;
 
 public class MainActivity extends AppCompatActivity {
 
@@ -24,5 +25,7 @@ public class MainActivity extends AppCompatActivity {
         } catch (Exception e) {
             Toast.makeText(MainActivity.this, e.getMessage(), Toast.LENGTH_LONG).show();
         }
+
+        HistoryExpression h = new HistoryExpression();
     }
 }

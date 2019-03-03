@@ -3,7 +3,9 @@ package com.mobileprograming.g4.calculator.fragments;
 import android.content.Intent;
 import android.content.pm.ActivityInfo;
 import android.content.res.Configuration;
+import android.database.ContentObserver;
 import android.os.Bundle;
+import android.os.Handler;
 import android.provider.Settings;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
@@ -40,6 +42,8 @@ public class CalculatorFragment extends Fragment {
     private AppCompatActivity mParent;
     private boolean mRadModeIsOn;
 
+    private ContentObserver rotationObserver;
+
     @Nullable
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container,
@@ -48,6 +52,18 @@ public class CalculatorFragment extends Fragment {
 
         mParent = ((AppCompatActivity) getContext());
         mIsPortrait = getResources().getConfiguration().orientation == Configuration.ORIENTATION_PORTRAIT;
+
+        mParent.getContentResolver().registerContentObserver(
+                Settings.System.getUriFor(Settings.System.ACCELEROMETER_ROTATION),
+                true,
+                rotationObserver);
+
+        rotationObserver = new ContentObserver(new Handler()) {
+            @Override
+            public void onChange(boolean selfChange) {
+                // Observe for ratation change
+            }
+        };
 
         mapControls(view);
         addEvents();
@@ -66,6 +82,7 @@ public class CalculatorFragment extends Fragment {
 
     /**
      * Mapping view controls from view to activity
+     *
      * @param view View that contains mapped view controls
      */
     private void mapControls(View view) {
@@ -114,7 +131,9 @@ public class CalculatorFragment extends Fragment {
         btnMore = view.findViewById(R.id.btnMore);
     }
 
-    /** Add events for view controls */
+    /**
+     * Add events for view controls
+     */
     private void addEvents() {
         btnHistory.setOnClickListener(this::btnHistoryOnClick);
         btnBackspace.setOnClickListener(this::btnBackspaceOnClick);
@@ -180,28 +199,37 @@ public class CalculatorFragment extends Fragment {
         outState.putBoolean(IS_ON_RAD_MODE, mRadModeIsOn);
     }
 
-    /** Set expression for textview txtExpression */
+    /**
+     * Set expression for textview txtExpression
+     */
     private void setExpression(String expression) {
         edtExpression.setText(expression);
     }
 
-    /** Get expression from textview txtExpression */
+    /**
+     * Get expression from textview txtExpression
+     */
     private String getExpression() {
         return edtExpression.getText().toString();
     }
 
-    /** Get current cursor position from textview txtExpression */
+    /**
+     * Get current cursor position from textview txtExpression
+     */
     private int getCursorPosition() {
         return edtExpression.getSelectionStart();
     }
 
-    /** Set result for textview txtResult */
+    /**
+     * Set result for textview txtResult
+     */
     private void setResult(String result) {
         txtResult.setText(result);
     }
 
     /**
      * Handle button btnRotate click event
+     *
      * @param view btnBackspace
      */
     private void btnBackspaceOnClick(View view) {
@@ -211,6 +239,7 @@ public class CalculatorFragment extends Fragment {
 
     /**
      * Handle button btnRotate click event
+     *
      * @param view btnRotate
      */
     private void btnRotateOnClick(View view) {
@@ -323,6 +352,7 @@ public class CalculatorFragment extends Fragment {
 
     /**
      * Handle buttun btnRad click event
+     *
      * @param view btnRad
      */
     private void btnRadOnClick(View view) {
