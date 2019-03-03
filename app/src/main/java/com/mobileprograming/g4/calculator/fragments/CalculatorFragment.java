@@ -3,9 +3,7 @@ package com.mobileprograming.g4.calculator.fragments;
 import android.content.Intent;
 import android.content.pm.ActivityInfo;
 import android.content.res.Configuration;
-import android.database.ContentObserver;
 import android.os.Bundle;
-import android.os.Handler;
 import android.provider.Settings;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
@@ -20,6 +18,7 @@ import android.widget.EditText;
 import android.widget.ImageButton;
 import android.widget.TextView;
 
+import com.mobileprograming.g4.calculator.HistoryActivity;
 import com.mobileprograming.g4.calculator.R;
 
 public class CalculatorFragment extends Fragment {
@@ -42,8 +41,6 @@ public class CalculatorFragment extends Fragment {
     private AppCompatActivity mParent;
     private boolean mRadModeIsOn;
 
-    private ContentObserver rotationObserver;
-
     @Nullable
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container,
@@ -52,18 +49,6 @@ public class CalculatorFragment extends Fragment {
 
         mParent = ((AppCompatActivity) getContext());
         mIsPortrait = getResources().getConfiguration().orientation == Configuration.ORIENTATION_PORTRAIT;
-
-        mParent.getContentResolver().registerContentObserver(
-                Settings.System.getUriFor(Settings.System.ACCELEROMETER_ROTATION),
-                true,
-                rotationObserver);
-
-        rotationObserver = new ContentObserver(new Handler()) {
-            @Override
-            public void onChange(boolean selfChange) {
-                // Observe for ratation change
-            }
-        };
 
         mapControls(view);
         addEvents();
@@ -251,7 +236,13 @@ public class CalculatorFragment extends Fragment {
         }
     }
 
+    /**
+     * Handle button btnHistory click event
+     * @param view btnHistory
+     */
     private void btnHistoryOnClick(View view) {
+        Intent intent = new Intent(getContext(), HistoryActivity.class);
+        startActivity(intent);
     }
 
     private void btnNum0OnClick(View view) {
@@ -352,7 +343,6 @@ public class CalculatorFragment extends Fragment {
 
     /**
      * Handle buttun btnRad click event
-     *
      * @param view btnRad
      */
     private void btnRadOnClick(View view) {
