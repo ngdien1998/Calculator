@@ -73,6 +73,13 @@
                 android:src="@drawable/ic_screen_rotation_24dp" />
 
             <ImageButton
+                android:id="@+id/btnSave"
+                style="?android:attr/borderlessButtonStyle"
+                android:layout_margin="2dp"
+                android:src="@drawable/ic_save"
+                android:contentDescription="@string/btn_rotate_desc" />
+
+            <ImageButton
                 android:id="@+id/btnBackspace"
                 style="?android:attr/borderlessButtonStyle"
                 android:layout_column="3"

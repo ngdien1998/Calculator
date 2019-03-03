@@ -58,6 +58,14 @@
                 android:src="@drawable/ic_screen_rotation_24dp" />
 
             <ImageButton
+                android:id="@+id/btnSave"
+                style="?android:attr/borderlessButtonStyle"
+                android:layout_height="@dimen/button_height_landscape"
+                android:layout_margin="2dp"
+                android:contentDescription="@string/btn_rotate_desc"
+                android:src="@drawable/ic_save" />
+
+            <ImageButton
                 android:id="@+id/btnBackspace"
                 style="?android:attr/borderlessButtonStyle"
                 android:layout_height="@dimen/button_height_landscape"
