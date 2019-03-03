@@ -32,7 +32,7 @@ public class CalculatorFragment extends Fragment {
             btnXPowers2_CoshPowersMinus1, btnEPowersN_SinhPowersMinus1, btnLn_Sinh, btnLog_Cosh,
             btn1DevideX_Tanh, btnTan_Arctan, btnCos_Arccos, btnSin_Arcsin, btnSquareRoot_CubeRoot,
             btnRad, btnMore;
-    private ImageButton btnRotate, btnBackspace, btnHistory;
+    private ImageButton btnRotate, btnBackspace, btnHistory, btnSave;
     private EditText edtExpression;
     private TextView txtResult;
     private TextView txtRad;
@@ -67,12 +67,12 @@ public class CalculatorFragment extends Fragment {
 
     /**
      * Mapping view controls from view to activity
-     *
      * @param view View that contains mapped view controls
      */
     private void mapControls(View view) {
         btnHistory = view.findViewById(R.id.btnHistory);
         btnRotate = view.findViewById(R.id.btnRotate);
+        btnSave = view.findViewById(R.id.btnSave);
         btnBackspace = view.findViewById(R.id.btnBackspace);
         edtExpression = view.findViewById(R.id.edtExpression);
         txtResult = view.findViewById(R.id.txtResult);
@@ -122,6 +122,7 @@ public class CalculatorFragment extends Fragment {
     private void addEvents() {
         btnHistory.setOnClickListener(this::btnHistoryOnClick);
         btnBackspace.setOnClickListener(this::btnBackspaceOnClick);
+        btnSave.setOnClickListener(this::btnSaveOnClick);
 
         btnNum0.setOnClickListener(this::btnNum0OnClick);
         btnNum1.setOnClickListener(this::btnNum1OnClick);
@@ -178,6 +179,9 @@ public class CalculatorFragment extends Fragment {
         }
     }
 
+    private void btnSaveOnClick(View view) {
+    }
+
     @Override
     public void onSaveInstanceState(@NonNull Bundle outState) {
         super.onSaveInstanceState(outState);
@@ -214,7 +218,6 @@ public class CalculatorFragment extends Fragment {
 
     /**
      * Handle button btnRotate click event
-     *
      * @param view btnBackspace
      */
     private void btnBackspaceOnClick(View view) {
@@ -224,7 +227,6 @@ public class CalculatorFragment extends Fragment {
 
     /**
      * Handle button btnRotate click event
-     *
      * @param view btnRotate
      */
     private void btnRotateOnClick(View view) {
