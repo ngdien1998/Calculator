@@ -14,7 +14,6 @@ import com.mobileprograming.g4.calculator.adapters.HistoryExpressionsAdapter;
 import com.mobileprograming.g4.calculator.models.HistoryExpression;
 
 import java.util.ArrayList;
-import java.util.Arrays;
 
 public class AllExpressionsFragment extends Fragment {
 

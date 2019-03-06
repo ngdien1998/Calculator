@@ -1,5 +1,7 @@
 package com.mobileprograming.g4.calculator.fragments;
 
+import android.annotation.SuppressLint;
+import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.pm.ActivityInfo;
 import android.content.res.Configuration;
@@ -7,7 +9,9 @@ import android.os.Bundle;
 import android.provider.Settings;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
+import android.support.design.widget.TextInputLayout;
 import android.support.v4.app.Fragment;
+import android.support.v7.app.AlertDialog;
 import android.support.v7.app.AppCompatActivity;
 import android.util.Log;
 import android.view.LayoutInflater;
@@ -20,6 +24,8 @@ import android.widget.TextView;
 
 import com.mobileprograming.g4.calculator.HistoryActivity;
 import com.mobileprograming.g4.calculator.R;
+
+import java.util.Objects;
 
 public class CalculatorFragment extends Fragment {
 
@@ -36,6 +42,9 @@ public class CalculatorFragment extends Fragment {
     private EditText edtExpression;
     private TextView txtResult;
     private TextView txtRad;
+
+    private TextInputLayout tilTitle;
+    private EditText edtTitle;
 
     private boolean mIsPortrait;
     private AppCompatActivity mParent;
@@ -179,7 +188,42 @@ public class CalculatorFragment extends Fragment {
         }
     }
 
+    /**
+     * Handle button btnRotate click event
+     * @param view btnSave
+     */
     private void btnSaveOnClick(View view) {
+        LayoutInflater inflater = getLayoutInflater();
+
+        @SuppressLint("InflateParams")
+        View enterTitleDialog = inflater.inflate(R.layout.layout_dialog, null);
+
+        tilTitle = enterTitleDialog.findViewById(R.id.tilTitle);
+        edtTitle = enterTitleDialog.findViewById(R.id.edtTitle);
+
+        AlertDialog.Builder dialogBuilder = new AlertDialog.Builder(Objects.requireNonNull(getContext()));
+        dialogBuilder.setTitle("Enter expression's title");
+        dialogBuilder.setView(enterTitleDialog);
+        dialogBuilder.setCancelable(false);
+        dialogBuilder.setNegativeButton("Cancel", this::dialogOnNegativeButtonClick);
+        dialogBuilder.setPositiveButton("Save", this::dialogOnPositiveButtonClick);
+
+        dialogBuilder.show();
+    }
+
+    private void dialogOnPositiveButtonClick(DialogInterface dialog, int which) {
+        dialog.dismiss();
+    }
+
+    private void dialogOnNegativeButtonClick(DialogInterface dialog, int which) {
+        String title = edtTitle.getText().toString().trim();
+        if (title.isEmpty()) {
+            tilTitle.setError("The title cannot be empty");
+            return;
+        }
+
+        tilTitle.setErrorEnabled(false);
+        // TODO insert saved expression into database
     }
 
     @Override
