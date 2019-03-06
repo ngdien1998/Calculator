@@ -8,6 +8,7 @@ import android.provider.Settings;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
+import android.support.v7.app.AlertDialog;
 import android.support.v7.app.AppCompatActivity;
 import android.util.Log;
 import android.view.LayoutInflater;
@@ -19,6 +20,7 @@ import android.widget.ImageButton;
 import android.widget.TextView;
 
 import com.mobileprograming.g4.calculator.HistoryActivity;
+import com.mobileprograming.g4.calculator.PopupTitle;
 import com.mobileprograming.g4.calculator.R;
 
 public class CalculatorFragment extends Fragment {
@@ -180,6 +182,13 @@ public class CalculatorFragment extends Fragment {
     }
 
     private void btnSaveOnClick(View view) {
+        AlertDialog.Builder mBuilder = new AlertDialog.Builder(getContext());
+
+        View mView = getLayoutInflater().inflate(R.layout.dialogtitle,null);
+
+        mBuilder.setView(mView);
+        AlertDialog dialog = mBuilder.create();
+        dialog.show();
     }
 
     @Override
@@ -246,6 +255,7 @@ public class CalculatorFragment extends Fragment {
         Intent intent = new Intent(getContext(), HistoryActivity.class);
         startActivity(intent);
     }
+
 
     private void btnNum0OnClick(View view) {
     }
