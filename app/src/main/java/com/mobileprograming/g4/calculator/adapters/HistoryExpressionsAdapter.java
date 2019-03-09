@@ -21,13 +21,12 @@ public class HistoryExpressionsAdapter extends RecyclerView.Adapter<HistoryExpre
     private ArrayList<? extends HistoryExpression> expressions;
 
     private LayoutInflater inflater;
-    private SimpleDateFormat dateFormat;
+    private static SimpleDateFormat dateFormat = new SimpleDateFormat("dd/MM/yyyy hh:mm", Locale.getDefault());
 
     public HistoryExpressionsAdapter(Context context, ArrayList<? extends HistoryExpression> expressions) {
         this.expressions = expressions;
 
         inflater = LayoutInflater.from(context);
-        dateFormat = new SimpleDateFormat("dd/MM/yyyy hh:mm", Locale.getDefault());
     }
 
     @NonNull

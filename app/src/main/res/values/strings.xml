@@ -44,4 +44,5 @@
     <string name="btn_history_desc">History</string>
     <string name="clear_all_saved_expressions">Clear all saved expressions</string>
     <string name="clear_all_expressions">Clear all expressions</string>
+    <string name="edt_title_hint">Enter expression tilte</string>
 </resources>
