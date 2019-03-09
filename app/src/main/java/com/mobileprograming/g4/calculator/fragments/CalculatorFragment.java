@@ -204,7 +204,7 @@ public class CalculatorFragment extends Fragment {
         AlertDialog.Builder dialogBuilder = new AlertDialog.Builder(Objects.requireNonNull(getContext()));
         dialogBuilder.setTitle("Enter expression's title");
         dialogBuilder.setView(enterTitleDialog);
-        dialogBuilder.setCancelable(false);
+        dialogBuilder.setCancelable(true);
         dialogBuilder.setNegativeButton("Cancel", this::dialogOnNegativeButtonClick);
         dialogBuilder.setPositiveButton("Save", this::dialogOnPositiveButtonClick);
 
