@@ -4,10 +4,8 @@ import android.os.Bundle;
 import android.support.v4.app.FragmentManager;
 import android.support.v4.app.FragmentTransaction;
 import android.support.v7.app.AppCompatActivity;
-import android.widget.Toast;
 
 import com.mobileprograming.g4.calculator.fragments.CalculatorFragment;
-import com.mobileprograming.g4.calculator.models.HistoryExpression;
 
 public class MainActivity extends AppCompatActivity {
 
@@ -21,6 +19,5 @@ public class MainActivity extends AppCompatActivity {
         FragmentTransaction fragmentTransaction = fragmentManager.beginTransaction();
         fragmentTransaction.replace(R.id.container, new CalculatorFragment());
         fragmentTransaction.commit();
-
     }
 }
