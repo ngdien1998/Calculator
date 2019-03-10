@@ -10,7 +10,6 @@ import com.mobileprograming.g4.calculator.models.SavedExpression;
 import org.mariuszgromada.math.mxparser.Expression;
 
 import java.io.IOException;
-import java.net.ContentHandler;
 import java.util.ArrayList;
 
 public class ExpressionsCalculateService implements CalculateService, ExpressionsService {
@@ -34,17 +33,12 @@ public class ExpressionsCalculateService implements CalculateService, Expression
 
     @Override
     public String calculate(String expression) throws InvalidExpressionFormatException {
-        if (!isValidExpressionFormat(expression)) {
-            throw new InvalidExpressionFormatException("Expression format is not valid");
-        }
-        this.expression.setExpressionString(expression);
-        double result = this.expression.calculate();
-        return String.valueOf(result);
-    }
-
-    private boolean isValidExpressionFormat(String expression) {
-        // TODO check expression format valid
-        return false;
+            this.expression.setExpressionString(expression);
+            double result = this.expression.calculate();
+            if (String.valueOf(result).toLowerCase().equals("nan")) {
+                throw new InvalidExpressionFormatException("Expression format invalid");
+            }
+            return String.valueOf(result);
     }
 
     @Override
