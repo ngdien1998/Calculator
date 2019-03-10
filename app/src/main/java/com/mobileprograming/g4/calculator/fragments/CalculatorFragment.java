@@ -21,10 +21,14 @@ import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ImageButton;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.mobileprograming.g4.calculator.HistoryActivity;
 import com.mobileprograming.g4.calculator.R;
+import com.mobileprograming.g4.calculator.business.ExpressionsCalculateService;
+import com.mobileprograming.g4.calculator.exceptions.InvalidExpressionFormatException;
 
+import java.io.IOException;
 import java.util.Objects;
 
 public class CalculatorFragment extends Fragment {
@@ -49,6 +53,7 @@ public class CalculatorFragment extends Fragment {
     private boolean mIsPortrait;
     private AppCompatActivity mParent;
     private boolean mRadModeIsOn;
+    private boolean mIsFistPage;
 
     @Nullable
     @Override
@@ -63,13 +68,14 @@ public class CalculatorFragment extends Fragment {
         addEvents();
 
         mRadModeIsOn = false;
+        mIsFistPage = true;
         // Check on the last session whether rad mode is saved or not?
         if (savedInstanceState != null) {
             mRadModeIsOn = savedInstanceState.getBoolean(IS_ON_RAD_MODE);
         }
 
         // Disable keyboard when focusing on the edittext
-        edtExpression.setShowSoftInputOnFocus(false);
+        //edtExpression.setShowSoftInputOnFocus(false);
 
         return view;
     }
@@ -240,6 +246,15 @@ public class CalculatorFragment extends Fragment {
     }
 
     /**
+     *
+     * @param expression
+     */
+    private void appendExpression(String expression) {
+        String currenExp = getExpression();
+        setExpression(currenExp + expression);
+    }
+
+    /**
      * Get expression from textview txtExpression
      */
     private String getExpression() {
@@ -266,7 +281,11 @@ public class CalculatorFragment extends Fragment {
      */
     private void btnBackspaceOnClick(View view) {
         String ex = getExpression();
-        setExpression(ex.substring(0, ex.length() - 2));
+        if (ex.isEmpty() || ex.length() == 2) {
+            setExpression("");
+        } else {
+            setExpression(ex.substring(0, ex.length() - 2));
+        }
     }
 
     /**
@@ -291,40 +310,87 @@ public class CalculatorFragment extends Fragment {
         startActivity(intent);
     }
 
+    private boolean isValidNumberPosition() {
+        String curentExp = getExpression();
+        if (curentExp.length() <= 0) {
+            return true;
+        }
+        char last = curentExp.charAt(curentExp.length() - 1);
+        return last == '(' || Character.isDigit(last) || last == '.' || last == '+' || last == '−' || last == '⨯' || last == '÷';
+    }
+
     private void btnNum0OnClick(View view) {
+        if (isValidNumberPosition()) {
+            appendExpression("0");
+        }
     }
 
     private void btnNum1OnClick(View view) {
+        if (isValidNumberPosition()) {
+            appendExpression("1");
+        }
     }
 
     private void btnNum2OnClick(View view) {
+        if (isValidNumberPosition()) {
+            appendExpression("2");
+        }
     }
 
     private void btnNum3OnClick(View view) {
+        if (isValidNumberPosition()) {
+            appendExpression("3");
+        }
     }
 
     private void btnNum4OnClick(View view) {
+        if (isValidNumberPosition()) {
+            appendExpression("4");
+        }
     }
 
     private void btnNum5OnClick(View view) {
+        if (isValidNumberPosition()) {
+            appendExpression("5");
+        }
     }
 
     private void btnNum6OnClick(View view) {
+        if (isValidNumberPosition()) {
+            appendExpression("6");
+        }
     }
 
     private void btnNum7OnClick(View view) {
+        if (isValidNumberPosition()) {
+            appendExpression("7");
+        }
     }
 
     private void btnNum8OnClick(View view) {
+        if (isValidNumberPosition()) {
+            appendExpression("8");
+        }
     }
 
     private void btnNum9OnClick(View view) {
+        if (isValidNumberPosition()) {
+            appendExpression("9");
+        }
     }
 
     private void btnPlusMinusOnClick(View view) {
     }
 
     private void btnEqualOnClick(View view) {
+        try {
+            String res = ExpressionsCalculateService.getInstance(getContext()).calculate(getExpression());
+            setResult(res);
+        } catch (InvalidExpressionFormatException e) {
+            Toast.makeText(getContext(), e.getMessage(), Toast.LENGTH_LONG).show();
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
     }
 
     private void btnPlusOnClick(View view) {
@@ -385,6 +451,11 @@ public class CalculatorFragment extends Fragment {
     }
 
     private void btnSquareRoot_CubeRootOnClick(View view) {
+        if (mIsFistPage) {
+
+        } else {
+
+        }
     }
 
     /**
@@ -401,5 +472,6 @@ public class CalculatorFragment extends Fragment {
     }
 
     private void btnMoreOnClick(View view) {
+        mIsFistPage = !mIsFistPage;
     }
 }
