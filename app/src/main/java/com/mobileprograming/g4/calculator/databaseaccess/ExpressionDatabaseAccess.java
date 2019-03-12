@@ -2,9 +2,12 @@ package com.mobileprograming.g4.calculator.databaseaccess;
 
 import android.database.Cursor;
 
+import com.mobileprograming.g4.calculator.models.HistoryExpression;
+import com.mobileprograming.g4.calculator.models.SavedExpression;
+
 public interface ExpressionDatabaseAccess {
-    Cursor readAllHistoryExpression();
-    Cursor readAllSavedExpression();
-    boolean saveHistoryExpression();
-    boolean saveExpression();
+    Cursor readHistoryExpressions();
+    Cursor readSavedExpressions();
+    void saveHistoryExpression(HistoryExpression expression);
+    void saveExpression(SavedExpression expression);
 }

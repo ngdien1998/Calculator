@@ -8,6 +8,6 @@ import java.util.ArrayList;
 public interface ExpressionsService {
     ArrayList<SavedExpression> getSavedExpressions();
     ArrayList<HistoryExpression> getHistoryExpressions();
-    void saveExpression(SavedExpression expression);
-    void saveHistoryExpression(HistoryExpression expression);
+    boolean saveExpression(SavedExpression expression);
+    boolean saveHistoryExpression(HistoryExpression expression);
 }

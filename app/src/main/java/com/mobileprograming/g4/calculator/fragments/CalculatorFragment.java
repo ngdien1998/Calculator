@@ -27,8 +27,11 @@ import com.mobileprograming.g4.calculator.HistoryActivity;
 import com.mobileprograming.g4.calculator.R;
 import com.mobileprograming.g4.calculator.business.ExpressionsCalculateService;
 import com.mobileprograming.g4.calculator.exceptions.InvalidExpressionFormatException;
+import com.mobileprograming.g4.calculator.models.HistoryExpression;
+import com.mobileprograming.g4.calculator.models.SavedExpression;
 
 import java.io.IOException;
+import java.util.Date;
 import java.util.Objects;
 
 public class CalculatorFragment extends Fragment {
@@ -54,11 +57,18 @@ public class CalculatorFragment extends Fragment {
     private AppCompatActivity mParent;
     private boolean mRadModeIsOn;
     private boolean mIsFistPage;
+    private ExpressionsCalculateService calculatorService;
 
     @Nullable
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container,
                              @Nullable Bundle savedInstanceState) {
+        try {
+            calculatorService = ExpressionsCalculateService.getInstance(getContext());
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+
         View view = inflater.inflate(R.layout.fragment_calculator, container, false);
 
         mParent = ((AppCompatActivity) getContext());
@@ -199,6 +209,12 @@ public class CalculatorFragment extends Fragment {
      * @param view btnSave
      */
     private void btnSaveOnClick(View view) {
+        try {
+            calculatorService.calculate(getExpression());
+        } catch (InvalidExpressionFormatException e) {
+            return;
+        }
+
         LayoutInflater inflater = getLayoutInflater();
 
         @SuppressLint("InflateParams")
@@ -217,11 +233,7 @@ public class CalculatorFragment extends Fragment {
         dialogBuilder.show();
     }
 
-    private void dialogOnPositiveButtonClick(DialogInterface dialog, int which) {
-        dialog.dismiss();
-    }
-
-    private void dialogOnNegativeButtonClick(DialogInterface dialog, int which) {
+    private void dialogOnPositiveButtonClick(DialogInterface dialog, int which)  {
         String title = edtTitle.getText().toString().trim();
         if (title.isEmpty()) {
             tilTitle.setError("The title cannot be empty");
@@ -229,7 +241,24 @@ public class CalculatorFragment extends Fragment {
         }
 
         tilTitle.setErrorEnabled(false);
-        // TODO insert saved expression into database
+
+        saveResult(title);
+    }
+
+    private void saveResult(String title) {
+        try {
+            String expression = getExpression();
+            String result = calculatorService.calculate(expression);
+            Date now = new Date();
+            SavedExpression savedExpression = new SavedExpression(title, now, expression, result);
+            calculatorService.saveExpression(savedExpression);
+        } catch (InvalidExpressionFormatException e) {
+            e.printStackTrace();
+        }
+    }
+
+    private void dialogOnNegativeButtonClick(DialogInterface dialog, int which) {
+        dialog.dismiss();
     }
 
     @Override
@@ -246,8 +275,8 @@ public class CalculatorFragment extends Fragment {
     }
 
     /**
-     *
-     * @param expression
+     * Append expression to current expression
+     * @param expression expression appending to current expression
      */
     private void appendExpression(String expression) {
         String currenExp = getExpression();
@@ -384,13 +413,18 @@ public class CalculatorFragment extends Fragment {
 
     private void btnEqualOnClick(View view) {
         try {
-            String res = ExpressionsCalculateService.getInstance(getContext()).calculate(getExpression());
-            setResult(res);
+            String expression = getExpression();
+            String result = calculatorService.calculate(expression);
+            setResult(result);
+
+            saveResult(expression, result);
         } catch (InvalidExpressionFormatException e) {
             Toast.makeText(getContext(), e.getMessage(), Toast.LENGTH_LONG).show();
-        } catch (IOException e) {
-            e.printStackTrace();
         }
+    }
+
+    private void saveResult(String expression, String result) {
+        calculatorService.saveHistoryExpression(new HistoryExpression(expression, result));
     }
 
     private void btnPlusOnClick(View view) {
