@@ -9,14 +9,14 @@ import java.io.IOException;
 import java.io.InputStream;
 import java.io.OutputStream;
 
-public abstract class SqliteHelper {
+abstract class SqliteHelper {
 
     private Context context;
     private static final String DB_NAME = "calculator.sqlite";
     private static final String DB_PATH = "/databases/";
-    protected SQLiteDatabase database;
+    SQLiteDatabase database;
 
-    public SqliteHelper(Context context) throws IOException {
+    SqliteHelper(Context context) throws IOException {
        this.context = context;
 
        copyDatabaseFormAssets();
@@ -35,7 +35,7 @@ public abstract class SqliteHelper {
     }
 
     private void copyDatabaseFormAssets() throws IOException {
-        InputStream fileIn = context.getAssets().open("sqlite/" + DB_NAME);
+        InputStream fileIn = context.getAssets().open("database/" + DB_NAME);
 
         File file = new File(context.getApplicationInfo().dataDir + DB_PATH);
         if (!file.exists() && !file.mkdir()) {
