@@ -92,6 +92,7 @@ public class CalculatorFragment extends Fragment {
 
     /**
      * Mapping view controls from view to activity
+     *
      * @param view View that contains mapped view controls
      */
     private void mapControls(View view) {
@@ -206,11 +207,12 @@ public class CalculatorFragment extends Fragment {
 
     /**
      * Handle button btnRotate click event
+     *
      * @param view btnSave
      */
     private void btnSaveOnClick(View view) {
         try {
-            calculatorService.calculate(getExpression());
+            calculatorService.calculate(getDisplayExpression());
         } catch (InvalidExpressionFormatException e) {
             return;
         }
@@ -233,7 +235,7 @@ public class CalculatorFragment extends Fragment {
         dialogBuilder.show();
     }
 
-    private void dialogOnPositiveButtonClick(DialogInterface dialog, int which)  {
+    private void dialogOnPositiveButtonClick(DialogInterface dialog, int which) {
         String title = edtTitle.getText().toString().trim();
         if (title.isEmpty()) {
             tilTitle.setError("The title cannot be empty");
@@ -247,7 +249,7 @@ public class CalculatorFragment extends Fragment {
 
     private void saveResult(String title) {
         try {
-            String expression = getExpression();
+            String expression = getDisplayExpression();
             String result = calculatorService.calculate(expression);
             Date now = new Date();
             SavedExpression savedExpression = new SavedExpression(title, now, expression, result);
@@ -276,18 +278,31 @@ public class CalculatorFragment extends Fragment {
 
     /**
      * Append expression to current expression
+     *
      * @param expression expression appending to current expression
      */
-    private void appendExpression(String expression) {
-        String currenExp = getExpression();
+    private void appendExpression(String expression, boolean appentTag) {
+        String currenExp = getDisplayExpression();
         setExpression(currenExp + expression);
+        if (appentTag) {
+            appendTagExpression(expression);
+        }
+    }
+
+    private void appendTagExpression(String expression) {
+        String currentTagExp = edtExpression.getTag().toString();
+        edtExpression.setTag(currentTagExp + expression);
     }
 
     /**
      * Get expression from textview txtExpression
      */
-    private String getExpression() {
+    private String getDisplayExpression() {
         return edtExpression.getText().toString();
+    }
+
+    private String getCalculatableExpression() {
+        return edtExpression.getTag().toString();
     }
 
     /**
@@ -306,11 +321,16 @@ public class CalculatorFragment extends Fragment {
 
     /**
      * Handle button btnRotate click event
+     *
      * @param view btnBackspace
      */
     private void btnBackspaceOnClick(View view) {
-        String ex = getExpression();
-        if (ex.isEmpty() || ex.length() == 2) {
+        String ex = getDisplayExpression();
+        if (ex.isEmpty()) {
+            return;
+        }
+
+        if (ex.length() == 1) {
             setExpression("");
         } else {
             setExpression(ex.substring(0, ex.length() - 2));
@@ -319,6 +339,7 @@ public class CalculatorFragment extends Fragment {
 
     /**
      * Handle button btnRotate click event
+     *
      * @param view btnRotate
      */
     private void btnRotateOnClick(View view) {
@@ -332,6 +353,7 @@ public class CalculatorFragment extends Fragment {
 
     /**
      * Handle button btnHistory click event
+     *
      * @param view btnHistory
      */
     private void btnHistoryOnClick(View view) {
@@ -340,7 +362,7 @@ public class CalculatorFragment extends Fragment {
     }
 
     private boolean isValidNumberPosition() {
-        String curentExp = getExpression();
+        String curentExp = getDisplayExpression();
         if (curentExp.length() <= 0) {
             return true;
         }
@@ -350,61 +372,61 @@ public class CalculatorFragment extends Fragment {
 
     private void btnNum0OnClick(View view) {
         if (isValidNumberPosition()) {
-            appendExpression("0");
+            appendExpression("0", true);
         }
     }
 
     private void btnNum1OnClick(View view) {
         if (isValidNumberPosition()) {
-            appendExpression("1");
+            appendExpression("1", true);
         }
     }
 
     private void btnNum2OnClick(View view) {
         if (isValidNumberPosition()) {
-            appendExpression("2");
+            appendExpression("2", true);
         }
     }
 
     private void btnNum3OnClick(View view) {
         if (isValidNumberPosition()) {
-            appendExpression("3");
+            appendExpression("3", true);
         }
     }
 
     private void btnNum4OnClick(View view) {
         if (isValidNumberPosition()) {
-            appendExpression("4");
+            appendExpression("4", true);
         }
     }
 
     private void btnNum5OnClick(View view) {
         if (isValidNumberPosition()) {
-            appendExpression("5");
+            appendExpression("5", true);
         }
     }
 
     private void btnNum6OnClick(View view) {
         if (isValidNumberPosition()) {
-            appendExpression("6");
+            appendExpression("6", true);
         }
     }
 
     private void btnNum7OnClick(View view) {
         if (isValidNumberPosition()) {
-            appendExpression("7");
+            appendExpression("7", true);
         }
     }
 
     private void btnNum8OnClick(View view) {
         if (isValidNumberPosition()) {
-            appendExpression("8");
+            appendExpression("8", true);
         }
     }
 
     private void btnNum9OnClick(View view) {
         if (isValidNumberPosition()) {
-            appendExpression("9");
+            appendExpression("9", true);
         }
     }
 
@@ -413,7 +435,8 @@ public class CalculatorFragment extends Fragment {
 
     private void btnEqualOnClick(View view) {
         try {
-            String expression = getExpression();
+            String expression = getCalculatableExpression();
+
             String result = calculatorService.calculate(expression);
             setResult(result);
 
@@ -428,7 +451,7 @@ public class CalculatorFragment extends Fragment {
     }
 
     private boolean isValidOperatorPosition() {
-        String currentEpx = getExpression();
+        String currentEpx = getDisplayExpression();
         if (currentEpx.trim().equals("")) {
             return false;
         }
@@ -438,33 +461,38 @@ public class CalculatorFragment extends Fragment {
 
     private void btnPlusOnClick(View view) {
         if (isValidOperatorPosition()) {
-            appendExpression(getString(R.string.btn_plus_label));
+            appendExpression(getString(R.string.btn_plus_label), false);
+            appendTagExpression(view.getTag().toString());
         }
     }
 
     private void btnMinusOnClick(View view) {
         if (isValidOperatorPosition()) {
-            appendExpression(getString(R.string.btn_minus_label));
+            appendExpression(getString(R.string.btn_minus_label), false);
+            appendTagExpression(view.getTag().toString());
         }
     }
 
     private void btnMultiflyOnClick(View view) {
         if (isValidOperatorPosition()) {
-            appendExpression(getString(R.string.btn_multifly_label));
+            appendExpression(getString(R.string.btn_multifly_label), false);
+            appendTagExpression(view.getTag().toString());
         }
     }
 
     private void btnDevideOnClick(View view) {
         if (isValidOperatorPosition()) {
-            appendExpression(getString(R.string.btn_devide_label));
+            appendExpression(getString(R.string.btn_devide_label), false);
+            appendTagExpression(view.getTag().toString());
         }
     }
 
     private void btnDotOnClick(View view) {
-        String currentEpx = getExpression().trim();
+        String currentEpx = getDisplayExpression().trim();
         if (!currentEpx.isEmpty()) {
             if (Character.isDigit(currentEpx.charAt(currentEpx.length() - 1))) {
-                appendExpression(getString(R.string.btn_dot_label));
+                appendExpression(getString(R.string.btn_dot_label), false);
+                appendTagExpression(view.getTag().toString());
             }
         }
     }
@@ -481,34 +509,85 @@ public class CalculatorFragment extends Fragment {
     private void btnE_FactorialOfXOnClick(View view) {
     }
 
+
     private void btnPi_CubeOfXOnClick(View view) {
+        if (mIsFistPage) {
+
+        } else {
+
+        }
     }
 
     private void btnAbsX_2PowersXOnClick(View view) {
+        if (mIsFistPage) {
+
+        } else {
+
+        }
     }
 
     private void btnXPowersN_TanhPowersMinus1OnClick(View view) {
+        if (mIsFistPage) {
+
+        } else {
+
+        }
     }
 
     private void btnXPowers2_CoshPowersMinus1OnClick(View view) {
+        if (mIsFistPage) {
+
+        } else {
+
+        }
     }
 
     private void btnEPowersN_SinhPowersMinus1OnClick(View view) {
+        if (mIsFistPage) {
+
+        } else {
+
+        }
     }
 
     private void btnLn_SinhOnClick(View view) {
+        if (mIsFistPage) {
+
+        } else {
+
+        }
     }
 
     private void btn1DevideX_TanhOnClick(View view) {
+        if (mIsFistPage) {
+
+        } else {
+
+        }
     }
 
     private void btnTan_ArctanOnClick(View view) {
+        if (mIsFistPage) {
+
+        } else {
+
+        }
     }
 
     private void btnCos_ArccosOnClick(View view) {
+        if (mIsFistPage) {
+
+        } else {
+
+        }
     }
 
     private void btnSin_ArcsinOnClick(View view) {
+        if (mIsFistPage) {
+
+        } else {
+
+        }
     }
 
     private void btnSquareRoot_CubeRootOnClick(View view) {
@@ -521,6 +600,7 @@ public class CalculatorFragment extends Fragment {
 
     /**
      * Handle buttun btnRad click event
+     *
      * @param view btnRad
      */
     private void btnRadOnClick(View view) {

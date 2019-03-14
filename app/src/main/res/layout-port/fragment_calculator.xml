@@ -20,6 +20,7 @@
             android:layout_height="wrap_content"
             android:background="@android:color/white"
             tools:targetApi="o"
+            android:tag=""
             android:hint="@string/edt_expression_hint"
             android:inputType="text"
             android:autofillHints="no" />
