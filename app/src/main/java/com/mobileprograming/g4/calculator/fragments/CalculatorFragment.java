@@ -427,19 +427,46 @@ public class CalculatorFragment extends Fragment {
         calculatorService.saveHistoryExpression(new HistoryExpression(expression, result));
     }
 
+    private boolean isValidOperatorPosition() {
+        String currentEpx = getExpression();
+        if (currentEpx.trim().equals("")) {
+            return false;
+        }
+        char last = currentEpx.charAt(currentEpx.length() - 1);
+        return Character.isDigit(last) || last == ')';
+    }
+
     private void btnPlusOnClick(View view) {
+        if (isValidOperatorPosition()) {
+            appendExpression(getString(R.string.btn_plus_label));
+        }
     }
 
     private void btnMinusOnClick(View view) {
+        if (isValidOperatorPosition()) {
+            appendExpression(getString(R.string.btn_minus_label));
+        }
     }
 
     private void btnMultiflyOnClick(View view) {
+        if (isValidOperatorPosition()) {
+            appendExpression(getString(R.string.btn_multifly_label));
+        }
     }
 
     private void btnDevideOnClick(View view) {
+        if (isValidOperatorPosition()) {
+            appendExpression(getString(R.string.btn_devide_label));
+        }
     }
 
     private void btnDotOnClick(View view) {
+        String currentEpx = getExpression().trim();
+        if (!currentEpx.isEmpty()) {
+            if (Character.isDigit(currentEpx.charAt(currentEpx.length() - 1))) {
+                appendExpression(getString(R.string.btn_dot_label));
+            }
+        }
     }
 
     private void btnPercentOnClick(View view) {
