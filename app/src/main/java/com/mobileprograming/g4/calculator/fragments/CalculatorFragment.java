@@ -281,10 +281,10 @@ public class CalculatorFragment extends Fragment {
      *
      * @param expression expression appending to current expression
      */
-    private void appendExpression(String expression, boolean appentTag) {
+    private void appendExpression(String expression, boolean alsoAppentTag) {
         String currenExp = getDisplayExpression();
         setExpression(currenExp + expression);
-        if (appentTag) {
+        if (alsoAppentTag) {
             appendTagExpression(expression);
         }
     }
@@ -462,28 +462,28 @@ public class CalculatorFragment extends Fragment {
     private void btnPlusOnClick(View view) {
         if (isValidOperatorPosition()) {
             appendExpression(getString(R.string.btn_plus_label), false);
-            appendTagExpression(view.getTag().toString());
+            appendTagExpression("+");
         }
     }
 
     private void btnMinusOnClick(View view) {
         if (isValidOperatorPosition()) {
             appendExpression(getString(R.string.btn_minus_label), false);
-            appendTagExpression(view.getTag().toString());
+            appendTagExpression("-");
         }
     }
 
     private void btnMultiflyOnClick(View view) {
         if (isValidOperatorPosition()) {
             appendExpression(getString(R.string.btn_multifly_label), false);
-            appendTagExpression(view.getTag().toString());
+            appendTagExpression("*");
         }
     }
 
     private void btnDevideOnClick(View view) {
         if (isValidOperatorPosition()) {
             appendExpression(getString(R.string.btn_devide_label), false);
-            appendTagExpression(view.getTag().toString());
+            appendTagExpression("/");
         }
     }
 
@@ -492,7 +492,7 @@ public class CalculatorFragment extends Fragment {
         if (!currentEpx.isEmpty()) {
             if (Character.isDigit(currentEpx.charAt(currentEpx.length() - 1))) {
                 appendExpression(getString(R.string.btn_dot_label), false);
-                appendTagExpression(view.getTag().toString());
+                appendTagExpression(".");
             }
         }
     }
@@ -508,7 +508,6 @@ public class CalculatorFragment extends Fragment {
 
     private void btnE_FactorialOfXOnClick(View view) {
     }
-
 
     private void btnPi_CubeOfXOnClick(View view) {
         if (mIsFistPage) {
