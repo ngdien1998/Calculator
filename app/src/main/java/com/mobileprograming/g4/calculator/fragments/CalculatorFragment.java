@@ -85,7 +85,8 @@ public class CalculatorFragment extends Fragment {
         }
 
         // Disable keyboard when focusing on the edittext
-        //edtExpression.setShowSoftInputOnFocus(false);
+        edtExpression.setShowSoftInputOnFocus(false);
+        edtExpression.setEnabled(false);
 
         return view;
     }
@@ -272,8 +273,12 @@ public class CalculatorFragment extends Fragment {
     /**
      * Set expression for textview txtExpression
      */
-    private void setExpression(String expression) {
+    private void setDisplayExpression(String expression) {
         edtExpression.setText(expression);
+    }
+
+    private void setTagExpression(String expression) {
+        edtExpression.setTag(expression);
     }
 
     /**
@@ -283,7 +288,7 @@ public class CalculatorFragment extends Fragment {
      */
     private void appendExpression(String expression, boolean alsoAppentTag) {
         String currenExp = getDisplayExpression();
-        setExpression(currenExp + expression);
+        setDisplayExpression(currenExp + expression);
         if (alsoAppentTag) {
             appendTagExpression(expression);
         }
@@ -325,16 +330,34 @@ public class CalculatorFragment extends Fragment {
      * @param view btnBackspace
      */
     private void btnBackspaceOnClick(View view) {
-        String ex = getDisplayExpression();
+        String ex = getCalculatableExpression();
         if (ex.isEmpty()) {
             return;
         }
 
         if (ex.length() == 1) {
-            setExpression("");
+            setTagExpression("");
         } else {
-            setExpression(ex.substring(0, ex.length() - 2));
+            setTagExpression(ex.substring(0, ex.length() - 1));
         }
+
+        String expression = getDisplayExpression();
+        String[] replacedPatterns = {
+            String.format(" %s ", getString(R.string.btn_plus_label)),
+            String.format(" %s ", getString(R.string.btn_minus_label)),
+            String.format(" %s ", getString(R.string.btn_multifly_label)),
+            String.format(" %s ", getString(R.string.btn_devide_label)),
+        };
+
+        for (String replacedPattern : replacedPatterns) {
+            if (expression.endsWith(replacedPattern)) {
+                int idx = expression.lastIndexOf(replacedPattern);
+                expression = expression.substring(0, idx);
+                break;
+            }
+        }
+
+        setDisplayExpression(expression);
     }
 
     /**
@@ -362,12 +385,12 @@ public class CalculatorFragment extends Fragment {
     }
 
     private boolean isValidNumberPosition() {
-        String curentExp = getDisplayExpression();
+        String curentExp = getCalculatableExpression();
         if (curentExp.length() <= 0) {
             return true;
         }
         char last = curentExp.charAt(curentExp.length() - 1);
-        return last == '(' || Character.isDigit(last) || last == '.' || last == '+' || last == '−' || last == '⨯' || last == '÷';
+        return last == '(' || Character.isDigit(last) || last == '.' || last == '+' || last == '-' || last == '*' || last == '/';
     }
 
     private void btnNum0OnClick(View view) {
@@ -436,7 +459,7 @@ public class CalculatorFragment extends Fragment {
     private void btnEqualOnClick(View view) {
         try {
             String expression = getCalculatableExpression();
-
+            expression = standardExpression(expression);
             String result = calculatorService.calculate(expression);
             setResult(result);
 
@@ -446,43 +469,61 @@ public class CalculatorFragment extends Fragment {
         }
     }
 
+    private String standardExpression(String expression) {
+        int countOpenP = 0, countCloseP = 0;
+        for (int i = 0; i < expression.length(); i++) {
+            char cur = expression.charAt(i);
+            if (cur == '(') {
+                countOpenP++;
+            } else if (cur == ')') {
+                countCloseP++;
+            }
+        }
+        if (countOpenP > countCloseP) {
+            for (int i = 1; i <= countOpenP - countCloseP; i++) {
+                expression = expression.concat(")");
+            }
+        }
+        return expression;
+    }
+
     private void saveResult(String expression, String result) {
         calculatorService.saveHistoryExpression(new HistoryExpression(expression, result));
     }
 
     private boolean isValidOperatorPosition() {
-        String currentEpx = getDisplayExpression();
+        String currentEpx = getCalculatableExpression();
         if (currentEpx.trim().equals("")) {
             return false;
         }
         char last = currentEpx.charAt(currentEpx.length() - 1);
-        return Character.isDigit(last) || last == ')';
+        return Character.isDigit(last) || last == ')' || last == '%';
     }
 
     private void btnPlusOnClick(View view) {
         if (isValidOperatorPosition()) {
-            appendExpression(getString(R.string.btn_plus_label), false);
+            appendExpression(String.format(" %s ", getString(R.string.btn_plus_label)), false);
             appendTagExpression("+");
         }
     }
 
     private void btnMinusOnClick(View view) {
         if (isValidOperatorPosition()) {
-            appendExpression(getString(R.string.btn_minus_label), false);
+            appendExpression(String.format(" %s ", getString(R.string.btn_minus_label)), false);
             appendTagExpression("-");
         }
     }
 
     private void btnMultiflyOnClick(View view) {
         if (isValidOperatorPosition()) {
-            appendExpression(getString(R.string.btn_multifly_label), false);
+            appendExpression(String.format(" %s ", getString(R.string.btn_multifly_label)), false);
             appendTagExpression("*");
         }
     }
 
     private void btnDevideOnClick(View view) {
         if (isValidOperatorPosition()) {
-            appendExpression(getString(R.string.btn_devide_label), false);
+            appendExpression(String.format(" %s ", getString(R.string.btn_devide_label)), false);
             appendTagExpression("/");
         }
     }
@@ -498,12 +539,67 @@ public class CalculatorFragment extends Fragment {
     }
 
     private void btnPercentOnClick(View view) {
+        if (isValidPercentPosition()) {
+            appendExpression("%", true);
+        }
     }
 
+    private boolean isValidPercentPosition() {
+        String expression = getCalculatableExpression().trim();
+        if (expression.isEmpty()) {
+            return false;
+        }
+        char last = expression.charAt(expression.length() - 1);
+        return Character.isDigit(last) || last == ')';
+    }
+
+    private boolean isValidOpenParenthesesPosition() {
+        String currentExpression = getCalculatableExpression().trim();
+        if (currentExpression.isEmpty()) {
+            return true;
+        }
+        char last = currentExpression.charAt(currentExpression.length() - 1);
+        return last == '+' || last == '-' || last == '*' || last == '/' || last == '(';
+    }
+
+    private boolean isValidCloseParenthesePosition() {
+        String currentExpression = getCalculatableExpression().trim();
+        if (currentExpression.isEmpty()) {
+            return false;
+        }
+
+        int len = currentExpression.length();
+        int countOpen = 0, countClose = 0;
+
+        for (int i = 0; i < len; i++) {
+            char curChar = currentExpression.charAt(i);
+            if (curChar == '(') {
+                countOpen++;
+            } else if (curChar == ')') {
+                countClose++;
+            }
+        }
+
+        char last = currentExpression.charAt(len - 1);
+        return (Character.isDigit(last) || last == ')') && countOpen > countClose;
+    }
+
+    /**
+     * Handle button btnParentheses click event
+     * @param view btnParentheses
+     */
     private void btnParenthesesOnClick(View view) {
+        if (isValidCloseParenthesePosition()) {
+            appendExpression(")", true);
+        } else if (isValidOpenParenthesesPosition()) {
+            appendExpression("(", true);
+        }
     }
 
     private void btnClearOnClick(View view) {
+        setDisplayExpression("");
+        setTagExpression("");
+        setResult("");
     }
 
     private void btnE_FactorialOfXOnClick(View view) {

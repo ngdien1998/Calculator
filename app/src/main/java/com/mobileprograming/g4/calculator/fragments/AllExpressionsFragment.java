@@ -35,8 +35,10 @@ public class AllExpressionsFragment extends Fragment {
             ExpressionsCalculateService calculatorService = ExpressionsCalculateService.getInstance(getContext());
             ArrayList<HistoryExpression> expressions = calculatorService.getHistoryExpressions();
 
-            HistoryExpressionsAdapter adapter = new HistoryExpressionsAdapter(getContext(), expressions);
-            rclAllExps.setAdapter(adapter);
+            if (expressions != null) {
+                HistoryExpressionsAdapter adapter = new HistoryExpressionsAdapter(getContext(), expressions);
+                rclAllExps.setAdapter(adapter);
+            }
         } catch (IOException e) {
             e.printStackTrace();
         }
