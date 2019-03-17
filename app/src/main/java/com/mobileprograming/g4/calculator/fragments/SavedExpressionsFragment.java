@@ -19,6 +19,22 @@ import java.util.ArrayList;
 
 public class SavedExpressionsFragment extends Fragment {
 
+    ArrayList<SavedExpression> expressions;
+    private HistoryExpressionsAdapter adapter;
+
+    public SavedExpressionsFragment() {
+        ItemClearedCallback callback = this::savedExpressionOnCleared;
+
+        Bundle bundle = new Bundle();
+        bundle.putSerializable("callback", callback);
+        setArguments(bundle);
+    }
+
+    private void savedExpressionOnCleared() {
+        expressions.clear();
+        adapter.notifyDataSetChanged();
+    }
+
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
@@ -31,9 +47,9 @@ public class SavedExpressionsFragment extends Fragment {
 
         try {
             ExpressionsCalculateService calculatorService = ExpressionsCalculateService.getInstance(getContext());
-            ArrayList<SavedExpression> expressions = calculatorService.getSavedExpressions();
+            expressions = calculatorService.getSavedExpressions();
 
-            HistoryExpressionsAdapter adapter = new HistoryExpressionsAdapter(getContext(), expressions);
+            adapter = new HistoryExpressionsAdapter(getContext(), expressions);
             rclAllExps.setAdapter(adapter);
         } catch (IOException e) {
             e.printStackTrace();

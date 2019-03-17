@@ -15,12 +15,15 @@
 
         <EditText
             android:id="@+id/edtExpression"
-            android:layout_gravity="top"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:background="@android:color/white"
             tools:targetApi="o"
             android:tag=""
+            android:textSize="32sp"
+            android:textColor="@android:color/background_dark"
+            android:cursorVisible="false"
+            android:textAlignment="viewEnd"
             android:hint="@string/edt_expression_hint"
             android:inputType="text"
             android:autofillHints="no" />
@@ -32,6 +35,7 @@
 
             <TextView
                 android:id="@+id/txtRad"
+                android:text="@string/txt_rad_mode_deg_label"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content" />
 
@@ -39,6 +43,7 @@
                 android:id="@+id/txtResult"
                 android:layout_weight="1"
                 android:gravity="end"
+                android:textSize="20sp"
                 android:layout_width="0dp"
                 android:layout_height="wrap_content" />
 
@@ -122,6 +127,7 @@
                 android:background="@drawable/btn_round_color_primary_lt2"
                 android:tag="square_root"
                 android:text="@string/btn_sqrt_label"
+                android:textAllCaps="false"
                 android:textColor="#37474F"
                 android:textSize="@dimen/button_size_landscape" />
 
@@ -189,7 +195,7 @@
                 android:layout_margin="2dp"
                 android:background="@drawable/btn_round_color_primary_lt2"
                 android:tag="cos"
-                android:text="@string/btn_cos_lalbel"
+                android:text="@string/btn_cos_label"
                 android:textAllCaps="false"
                 android:textColor="#37474F"
                 android:textSize="@dimen/button_size_landscape" />
@@ -282,7 +288,7 @@
                 android:layout_margin="2dp"
                 android:background="@drawable/btn_round_color_primary_lt2"
                 android:tag="1/x"
-                android:text="@string/btn1dx"
+                android:text="@string/btn_1dx_label"
                 android:textAllCaps="false"
                 android:textColor="#37474F"
                 android:textSize="@dimen/button_size_landscape" />
@@ -446,7 +452,7 @@
                 android:layout_margin="2dp"
                 android:background="@drawable/btn_round_color_primary_lt2"
                 android:tag="e"
-                android:text="@string/btn_a_label"
+                android:text="@string/btn_e_label"
                 android:textAllCaps="false"
                 android:textColor="#37474F"
                 android:textSize="@dimen/button_size_landscape" />

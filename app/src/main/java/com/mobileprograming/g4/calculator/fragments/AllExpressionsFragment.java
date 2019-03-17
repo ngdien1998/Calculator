@@ -20,6 +20,22 @@ import java.util.ArrayList;
 
 public class AllExpressionsFragment extends Fragment {
 
+    ArrayList<HistoryExpression> expressions;
+    private HistoryExpressionsAdapter adapter;
+
+    public AllExpressionsFragment() {
+        ItemClearedCallback callback = this::historyExpressionOnCleared;
+
+        Bundle bundle = new Bundle();
+        bundle.putSerializable("callback", callback);
+        setArguments(bundle);
+    }
+
+    private void historyExpressionOnCleared() {
+        expressions.clear();
+        adapter.notifyDataSetChanged();
+    }
+
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
@@ -33,10 +49,10 @@ public class AllExpressionsFragment extends Fragment {
 
         try {
             ExpressionsCalculateService calculatorService = ExpressionsCalculateService.getInstance(getContext());
-            ArrayList<HistoryExpression> expressions = calculatorService.getHistoryExpressions();
+            expressions = calculatorService.getHistoryExpressions();
 
             if (expressions != null) {
-                HistoryExpressionsAdapter adapter = new HistoryExpressionsAdapter(getContext(), expressions);
+                adapter = new HistoryExpressionsAdapter(getContext(), expressions);
                 rclAllExps.setAdapter(adapter);
             }
         } catch (IOException e) {

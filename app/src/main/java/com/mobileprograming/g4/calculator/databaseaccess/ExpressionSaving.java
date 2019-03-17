@@ -32,7 +32,7 @@ public class ExpressionSaving extends SqliteHelper implements ExpressionDatabase
 
     @Override
     public void saveHistoryExpression(HistoryExpression expression) {
-        String query = "INSERT INTO SavedExpression(Expression, Result) VALUES (?, ?)";
+        String query = "INSERT INTO HistoryExpression(Expression, Result) VALUES (?, ?)";
         database.execSQL(query, new String[] {expression.getExpression(), expression.getResult()});
     }
 
@@ -46,5 +46,17 @@ public class ExpressionSaving extends SqliteHelper implements ExpressionDatabase
                 expression.getExpression(),
                 expression.getResult()
         });
+    }
+
+    @Override
+    public void clearSavedExpressions() {
+        String query = "DELETE FROM SavedExpression";
+        database.execSQL(query);
+    }
+
+    @Override
+    public void clearHistoryExpressions() {
+        String query = "DELETE FROM HistoryExpression";
+        database.execSQL(query);
     }
 }

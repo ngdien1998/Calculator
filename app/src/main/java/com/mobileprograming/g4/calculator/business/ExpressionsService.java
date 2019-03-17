@@ -10,4 +10,6 @@ public interface ExpressionsService {
     ArrayList<HistoryExpression> getHistoryExpressions();
     boolean saveExpression(SavedExpression expression);
     boolean saveHistoryExpression(HistoryExpression expression);
+    boolean clearSavedExpressions();
+    boolean clearHistoryExpressions();
 }

@@ -108,4 +108,24 @@ public class ExpressionsCalculateService implements CalculateService, Expression
             return false;
         }
     }
+
+    @Override
+    public boolean clearSavedExpressions() {
+        try {
+            databaseHelper.clearSavedExpressions();
+            return true;
+        } catch (SQLException e) {
+            return false;
+        }
+    }
+
+    @Override
+    public boolean clearHistoryExpressions() {
+        try {
+            databaseHelper.clearHistoryExpressions();
+            return true;
+        } catch (SQLException e) {
+            return false;
+        }
+    }
 }

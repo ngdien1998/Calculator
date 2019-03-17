@@ -19,7 +19,7 @@ abstract class SqliteHelper {
     SqliteHelper(Context context) throws IOException {
        this.context = context;
 
-       copyDatabaseFormAssets();
+       processCopyDatabase();
        database = context.openOrCreateDatabase(DB_NAME, Context.MODE_PRIVATE, null);
     }
 

@@ -10,4 +10,6 @@ public interface ExpressionDatabaseAccess {
     Cursor readSavedExpressions();
     void saveHistoryExpression(HistoryExpression expression);
     void saveExpression(SavedExpression expression);
+    void clearSavedExpressions();
+    void clearHistoryExpressions();
 }
