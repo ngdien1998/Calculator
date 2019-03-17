@@ -59,6 +59,11 @@ public class CalculatorFragment extends Fragment {
     private boolean mIsFistPage;
     private ExpressionsCalculateService calculatorService;
 
+    private static String[] replacedPatterns = {
+            "sin(", "cos(", "tan(", "cot(", "asin(", "acos(", "atan(",
+            "sinh(", "cosh(", "tanh(", "asinh(", "acosh(", "atanh("
+    };
+
     @Nullable
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container,
@@ -77,7 +82,7 @@ public class CalculatorFragment extends Fragment {
         mapControls(view);
         addEvents();
 
-        mRadModeIsOn = false;
+        mRadModeIsOn = false; // Default is degree mode
         mIsFistPage = true;
         // Check on the last session whether rad mode is saved or not?
         if (savedInstanceState != null) {
@@ -86,7 +91,6 @@ public class CalculatorFragment extends Fragment {
 
         // Disable keyboard when focusing on the edittext
         edtExpression.setShowSoftInputOnFocus(false);
-        edtExpression.setEnabled(false);
 
         return view;
     }
@@ -181,7 +185,7 @@ public class CalculatorFragment extends Fragment {
             btnXPowers2_CoshPowersMinus1.setOnClickListener(this::btnXPowers2_CoshPowersMinus1OnClick);
             btnEPowersN_SinhPowersMinus1.setOnClickListener(this::btnEPowersN_SinhPowersMinus1OnClick);
             btnLn_Sinh.setOnClickListener(this::btnLn_SinhOnClick);
-            btnLog_Cosh.setOnClickListener(this::btn1DevideX_TanhOnClick);
+            btnLog_Cosh.setOnClickListener(this::btnLog_CoshOnClick);
             btn1DevideX_Tanh.setOnClickListener(this::btn1DevideX_TanhOnClick);
             btnTan_Arctan.setOnClickListener(this::btnTan_ArctanOnClick);
             btnCos_Arccos.setOnClickListener(this::btnCos_ArccosOnClick);
@@ -208,7 +212,6 @@ public class CalculatorFragment extends Fragment {
 
     /**
      * Handle button btnRotate click event
-     *
      * @param view btnSave
      */
     private void btnSaveOnClick(View view) {
@@ -283,7 +286,6 @@ public class CalculatorFragment extends Fragment {
 
     /**
      * Append expression to current expression
-     *
      * @param expression expression appending to current expression
      */
     private void appendExpression(String expression, boolean alsoAppentTag) {
@@ -326,7 +328,6 @@ public class CalculatorFragment extends Fragment {
 
     /**
      * Handle button btnRotate click event
-     *
      * @param view btnBackspace
      */
     private void btnBackspaceOnClick(View view) {
@@ -334,35 +335,17 @@ public class CalculatorFragment extends Fragment {
         if (ex.isEmpty()) {
             return;
         }
-
-        if (ex.length() == 1) {
-            setTagExpression("");
-        } else {
-            setTagExpression(ex.substring(0, ex.length() - 1));
-        }
+        setTagExpression(ex.substring(0, ex.length() - 1));
 
         String expression = getDisplayExpression();
-        String[] replacedPatterns = {
-            String.format(" %s ", getString(R.string.btn_plus_label)),
-            String.format(" %s ", getString(R.string.btn_minus_label)),
-            String.format(" %s ", getString(R.string.btn_multifly_label)),
-            String.format(" %s ", getString(R.string.btn_devide_label)),
-        };
-
-        for (String replacedPattern : replacedPatterns) {
-            if (expression.endsWith(replacedPattern)) {
-                int idx = expression.lastIndexOf(replacedPattern);
-                expression = expression.substring(0, idx);
-                break;
-            }
+        if (expression.isEmpty()) {
+            return;
         }
-
-        setDisplayExpression(expression);
+        setDisplayExpression(expression.substring(0, expression.length() - 1));
     }
 
     /**
      * Handle button btnRotate click event
-     *
      * @param view btnRotate
      */
     private void btnRotateOnClick(View view) {
@@ -376,7 +359,6 @@ public class CalculatorFragment extends Fragment {
 
     /**
      * Handle button btnHistory click event
-     *
      * @param view btnHistory
      */
     private void btnHistoryOnClick(View view) {
@@ -484,6 +466,18 @@ public class CalculatorFragment extends Fragment {
                 expression = expression.concat(")");
             }
         }
+        expression = expression.replace("p","pi")
+                .replace("cbrt(", "root(3,");
+
+        String mode = "[deg]*";
+        if (mRadModeIsOn) {
+            mode = "[rad]*";
+        }
+
+        for (String func : replacedPatterns) {
+            expression = expression.replace(func, func + mode);
+        }
+
         return expression;
     }
 
@@ -502,28 +496,28 @@ public class CalculatorFragment extends Fragment {
 
     private void btnPlusOnClick(View view) {
         if (isValidOperatorPosition()) {
-            appendExpression(String.format(" %s ", getString(R.string.btn_plus_label)), false);
+            appendExpression(getString(R.string.btn_plus_label), false);
             appendTagExpression("+");
         }
     }
 
     private void btnMinusOnClick(View view) {
         if (isValidOperatorPosition()) {
-            appendExpression(String.format(" %s ", getString(R.string.btn_minus_label)), false);
+            appendExpression(getString(R.string.btn_minus_label), false);
             appendTagExpression("-");
         }
     }
 
     private void btnMultiflyOnClick(View view) {
         if (isValidOperatorPosition()) {
-            appendExpression(String.format(" %s ", getString(R.string.btn_multifly_label)), false);
+            appendExpression(getString(R.string.btn_multifly_label), false);
             appendTagExpression("*");
         }
     }
 
     private void btnDevideOnClick(View view) {
         if (isValidOperatorPosition()) {
-            appendExpression(String.format(" %s ", getString(R.string.btn_devide_label)), false);
+            appendExpression(getString(R.string.btn_devide_label), false);
             appendTagExpression("/");
         }
     }
@@ -584,6 +578,50 @@ public class CalculatorFragment extends Fragment {
         return (Character.isDigit(last) || last == ')') && countOpen > countClose;
     }
 
+
+    /**
+     * Check condition for some special function such as sin, cos, tan, asin, acos,
+     * atan, sinh, cosh, tanh, asinh, acosh, atanh, log, ln, abs, 2^x, e^x, sqrt, cbrt
+     * @return validation result
+     */
+    private boolean isValidOperatorSpecialPosition() {
+        String expression = getCalculatableExpression().trim();
+        if (expression.isEmpty()) {
+            return true;
+        }
+        String currentEpx = getCalculatableExpression();
+        char last = currentEpx.charAt(currentEpx.length() - 1);
+        return last == '(' || last =='+' || last == '-' || last == '*' || last == '/';
+    }
+
+
+    /**
+     * Check condition for some function such as x^n, x^3, x^2, x!
+     * @return validation result
+     */
+    private boolean isValidOperatorXPowersPosition() {
+        String expression = getCalculatableExpression().trim();
+        if (expression.isEmpty()) {
+            return false;
+        }
+        String currentEpx = getCalculatableExpression();
+        char last = currentEpx.charAt(currentEpx.length() - 1);
+        return Character.isDigit(last) || last == ')' || last == '%' || last == 'e' || last == 'π';
+    }
+
+    /**
+     * TODO: Check for e, pi
+     */
+    private boolean isValidOperatorForEPiPosition() {
+        String curentExp = getCalculatableExpression();
+        if (curentExp.length() <= 0) {
+            return true;
+        }
+        char last = curentExp.charAt(curentExp.length() - 1);
+        return last == '(' || last == '+' || last == '-' || last == '*' || last == '/';
+    }
+
+
     /**
      * Handle button btnParentheses click event
      * @param view btnParentheses
@@ -603,93 +641,161 @@ public class CalculatorFragment extends Fragment {
     }
 
     private void btnE_FactorialOfXOnClick(View view) {
+        if (mIsFistPage) {
+            if(isValidOperatorForEPiPosition()){
+                appendExpression(String.format("%s", "e"), true);
+            }
+        } else {
+            if(isValidOperatorXPowersPosition()){
+                appendExpression(String.format("%s", "!"), true);
+            }
+        }
     }
 
     private void btnPi_CubeOfXOnClick(View view) {
         if (mIsFistPage) {
-
+            if(isValidOperatorForEPiPosition()){
+                appendExpression(String.format("%s", getString(R.string.btn_pi_label)), false);
+                appendTagExpression("p");
+            }
         } else {
-
+            if(isValidOperatorXPowersPosition()){
+                appendExpression(String.format("%s", "^(3)"), true);
+            }
         }
     }
 
     private void btnAbsX_2PowersXOnClick(View view) {
         if (mIsFistPage) {
-
+            if(isValidOperatorSpecialPosition()){
+                appendExpression(String.format("%s", "abs("), true);
+            }
         } else {
-
+            if(isValidOperatorSpecialPosition()){
+                appendExpression(String.format("%s", "2^("), true);
+            }
         }
     }
 
+
     private void btnXPowersN_TanhPowersMinus1OnClick(View view) {
         if (mIsFistPage) {
-
+            if(isValidOperatorXPowersPosition()){
+                appendExpression(String.format("%s", "^("), true);
+            }
         } else {
-
+            if(isValidOperatorSpecialPosition()){
+                appendExpression(String.format(" %s", "atanh("), true);
+            }
         }
     }
 
     private void btnXPowers2_CoshPowersMinus1OnClick(View view) {
         if (mIsFistPage) {
-
+            if(isValidOperatorXPowersPosition()){
+                appendExpression(String.format("%s", "^(2)"), true);
+            }
         } else {
-
+            if(isValidOperatorSpecialPosition()) {
+                appendExpression(String.format("%s", "acosh("), true);
+            }
         }
     }
 
     private void btnEPowersN_SinhPowersMinus1OnClick(View view) {
         if (mIsFistPage) {
-
+            if(isValidOperatorXPowersPosition()){
+                appendExpression(String.format("%s", "e^("), true);
+            }
         } else {
-
+            if(isValidOperatorSpecialPosition()) {
+                appendExpression(String.format("%s", "asinh("), true);
+            }
         }
     }
 
     private void btnLn_SinhOnClick(View view) {
         if (mIsFistPage) {
-
+            if(isValidOperatorSpecialPosition()) {
+                appendExpression(String.format("%s", "ln("), true);
+            }
         } else {
+            if(isValidOperatorSpecialPosition()) {
+                appendExpression(String.format("%s", "sinh("), true);
+            }
+        }
+    }
 
+    private void btnLog_CoshOnClick(View view) {
+        if (mIsFistPage) {
+            if(isValidOperatorSpecialPosition()) {
+                appendExpression(String.format("%s", "log10("), true);
+            }
+        } else {
+            if(isValidOperatorSpecialPosition()) {
+                appendExpression(String.format("%s", "cosh("), true);
+            }
         }
     }
 
     private void btn1DevideX_TanhOnClick(View view) {
         if (mIsFistPage) {
-
+            if(isValidOperatorSpecialPosition()) {
+                appendExpression(String.format("1%s(", getString(R.string.btn_devide_label)), false);
+                appendTagExpression("1/(");
+            }
         } else {
-
+            if(isValidOperatorSpecialPosition()) {
+                appendExpression(String.format("%s", "tanh("), true);
+            }
         }
     }
 
     private void btnTan_ArctanOnClick(View view) {
         if (mIsFistPage) {
-
+            if(isValidOperatorSpecialPosition()){
+                appendExpression(String.format(" %s", "tan("), true);
+            }
         } else {
-
+            if(isValidOperatorSpecialPosition()) {
+                appendExpression(String.format("%s", "atan("), true);
+            }
         }
     }
 
     private void btnCos_ArccosOnClick(View view) {
         if (mIsFistPage) {
-
+            if(isValidOperatorSpecialPosition()){
+                appendExpression(String.format(" %s", "cos("), true);
+            }
         } else {
-
+            if(isValidOperatorSpecialPosition()) {
+                appendExpression(String.format("%s", "acos("), true);
+            }
         }
     }
 
     private void btnSin_ArcsinOnClick(View view) {
         if (mIsFistPage) {
-
+            if(isValidOperatorSpecialPosition()){
+                appendExpression(String.format(" %s", "sin("), true);
+            }
         } else {
-
+            if(isValidOperatorSpecialPosition()) {
+                appendExpression(String.format("%s", "asin("), true);
+            }
         }
     }
 
     private void btnSquareRoot_CubeRootOnClick(View view) {
         if (mIsFistPage) {
-
+            if(isValidOperatorSpecialPosition()){
+                appendExpression(String.format("%s", "sqrt("), true);
+            }
         } else {
-
+            if(isValidOperatorSpecialPosition()){
+                appendExpression(String.format("%s", "cbrt("), true);
+            }
         }
     }
 
@@ -699,12 +805,8 @@ public class CalculatorFragment extends Fragment {
      * @param view btnRad
      */
     private void btnRadOnClick(View view) {
-        if (mRadModeIsOn) {
-            txtRad.setVisibility(View.INVISIBLE);
-        } else {
-            txtRad.setVisibility(View.VISIBLE);
-        }
         mRadModeIsOn = !mRadModeIsOn;
+        txtRad.setText(mRadModeIsOn ? "RAD" : "DEG");
     }
 
     private void btnMoreOnClick(View view) {
