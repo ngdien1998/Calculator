@@ -491,7 +491,7 @@ public class CalculatorFragment extends Fragment {
             return false;
         }
         char last = currentEpx.charAt(currentEpx.length() - 1);
-        return Character.isDigit(last) || last == ')' || last == '%';
+        return Character.isDigit(last) || last == ')' || last == '%' || last == 'p' || last == 'e';
     }
 
     private void btnPlusOnClick(View view) {
@@ -591,7 +591,7 @@ public class CalculatorFragment extends Fragment {
         }
         String currentEpx = getCalculatableExpression();
         char last = currentEpx.charAt(currentEpx.length() - 1);
-        return last == '(' || last =='+' || last == '-' || last == '*' || last == '/';
+        return last == '(' || last == '+' || last == '-' || last == '*' || last == '/';
     }
 
 
