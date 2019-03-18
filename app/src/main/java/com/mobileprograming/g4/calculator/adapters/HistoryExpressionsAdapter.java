@@ -56,4 +56,17 @@ public class HistoryExpressionsAdapter extends RecyclerView.Adapter<HistoryExpre
         return expressions.size();
     }
 
+    class ViewHolder extends RecyclerView.ViewHolder {
+
+        TextView txtTitle;
+        TextView txtExpression;
+        TextView txtTime;
+        TextView txtResult;
+
+        ViewHolder(@NonNull View itemView) {
+            super(itemView);
+
+
+        }
+    }
 }
