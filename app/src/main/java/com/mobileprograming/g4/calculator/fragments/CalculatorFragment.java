@@ -239,6 +239,11 @@ public class CalculatorFragment extends Fragment {
         dialogBuilder.show();
     }
 
+    /**
+     * Press button save expression
+     * @param dialog dialog
+     * @param which which
+     */
     private void dialogOnPositiveButtonClick(DialogInterface dialog, int which) {
         String title = edtTitle.getText().toString().trim();
         if (title.isEmpty()) {
@@ -250,6 +255,10 @@ public class CalculatorFragment extends Fragment {
         saveResult(title);
     }
 
+    /**
+     * Save expression
+     * @param title expression's title
+     */
     private void saveResult(String title) {
         try {
             String expression = getCalculatableExpression();
