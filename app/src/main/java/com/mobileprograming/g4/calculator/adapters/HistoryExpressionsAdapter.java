@@ -66,7 +66,10 @@ public class HistoryExpressionsAdapter extends RecyclerView.Adapter<HistoryExpre
         ViewHolder(@NonNull View itemView) {
             super(itemView);
 
-
+            txtTitle = itemView.findViewById(R.id.txtTitle);
+            txtExpression = itemView.findViewById(R.id.txtExpression);
+            txtTime = itemView.findViewById(R.id.txtTime);
+            txtResult = itemView.findViewById(R.id.txtResult);
         }
     }
 }
