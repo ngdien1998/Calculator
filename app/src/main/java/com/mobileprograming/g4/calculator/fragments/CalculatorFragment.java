@@ -97,7 +97,6 @@ public class CalculatorFragment extends Fragment {
 
     /**
      * Mapping view controls from view to activity
-     *
      * @param view View that contains mapped view controls
      */
     private void mapControls(View view) {
@@ -318,13 +317,6 @@ public class CalculatorFragment extends Fragment {
 
     private String getCalculatableExpression() {
         return edtExpression.getTag().toString();
-    }
-
-    /**
-     * Get current cursor position from textview txtExpression
-     */
-    private int getCursorPosition() {
-        return edtExpression.getSelectionStart();
     }
 
     /**
@@ -618,20 +610,6 @@ public class CalculatorFragment extends Fragment {
     }
 
     /**
-     * Check for e, pi
-     * @return validation result
-     */
-    private boolean isValidOperatorForEPiPosition() {
-        String curentExp = getCalculatableExpression();
-        if (curentExp.length() <= 0) {
-            return true;
-        }
-        char last = curentExp.charAt(curentExp.length() - 1);
-        return last == '(' || last == '+' || last == '-' || last == '*' || last == '/';
-    }
-
-
-    /**
      * Handle button btnParentheses click event
      * @param view btnParentheses
      */
@@ -651,7 +629,7 @@ public class CalculatorFragment extends Fragment {
 
     private void btnE_FactorialOfXOnClick(View view) {
         if (mIsFirstPage) {
-            if(isValidOperatorForEPiPosition()){
+            if(isValidOperatorSpecialPosition()){
                 appendExpression("e", true);
             }
         } else {
@@ -663,7 +641,7 @@ public class CalculatorFragment extends Fragment {
 
     private void btnPi_CubeOfXOnClick(View view) {
         if (mIsFirstPage) {
-            if(isValidOperatorForEPiPosition()){
+            if(isValidOperatorSpecialPosition()){
                 appendExpression(getString(R.string.btn_pi_label), false);
                 appendTagExpression("p");
             }
