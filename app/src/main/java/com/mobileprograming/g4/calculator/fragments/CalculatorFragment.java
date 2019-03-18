@@ -97,7 +97,6 @@ public class CalculatorFragment extends Fragment {
 
     /**
      * Mapping view controls from view to activity
-     *
      * @param view View that contains mapped view controls
      */
     private void mapControls(View view) {
@@ -321,13 +320,6 @@ public class CalculatorFragment extends Fragment {
     }
 
     /**
-     * Get current cursor position from textview txtExpression
-     */
-    private int getCursorPosition() {
-        return edtExpression.getSelectionStart();
-    }
-
-    /**
      * Set result for textview txtResult
      */
     private void setResult(String result) {
@@ -499,7 +491,7 @@ public class CalculatorFragment extends Fragment {
             return false;
         }
         char last = currentEpx.charAt(currentEpx.length() - 1);
-        return Character.isDigit(last) || last == ')' || last == '%';
+        return Character.isDigit(last) || last == ')' || last == '%' || last == 'p' || last == 'e';
     }
 
     private void btnPlusOnClick(View view) {
@@ -599,7 +591,7 @@ public class CalculatorFragment extends Fragment {
         }
         String currentEpx = getCalculatableExpression();
         char last = currentEpx.charAt(currentEpx.length() - 1);
-        return last == '(' || last =='+' || last == '-' || last == '*' || last == '/';
+        return last == '(' || last == '+' || last == '-' || last == '*' || last == '/';
     }
 
 
@@ -616,20 +608,6 @@ public class CalculatorFragment extends Fragment {
         char last = currentEpx.charAt(currentEpx.length() - 1);
         return Character.isDigit(last) || last == ')' || last == '%' || last == 'e' || last == 'π';
     }
-
-    /**
-     * Check for e, pi
-     * @return validation result
-     */
-    private boolean isValidOperatorForEPiPosition() {
-        String curentExp = getCalculatableExpression();
-        if (curentExp.length() <= 0) {
-            return true;
-        }
-        char last = curentExp.charAt(curentExp.length() - 1);
-        return last == '(' || last == '+' || last == '-' || last == '*' || last == '/';
-    }
-
 
     /**
      * Handle button btnParentheses click event
@@ -651,7 +629,7 @@ public class CalculatorFragment extends Fragment {
 
     private void btnE_FactorialOfXOnClick(View view) {
         if (mIsFirstPage) {
-            if(isValidOperatorForEPiPosition()){
+            if(isValidOperatorSpecialPosition()){
                 appendExpression("e", true);
             }
         } else {
@@ -663,7 +641,7 @@ public class CalculatorFragment extends Fragment {
 
     private void btnPi_CubeOfXOnClick(View view) {
         if (mIsFirstPage) {
-            if(isValidOperatorForEPiPosition()){
+            if(isValidOperatorSpecialPosition()){
                 appendExpression(getString(R.string.btn_pi_label), false);
                 appendTagExpression("p");
             }
