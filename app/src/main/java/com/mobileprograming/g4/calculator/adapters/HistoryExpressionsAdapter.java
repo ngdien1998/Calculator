@@ -23,6 +23,11 @@ public class HistoryExpressionsAdapter extends RecyclerView.Adapter<HistoryExpre
     private LayoutInflater inflater;
     private static SimpleDateFormat dateFormat = new SimpleDateFormat("dd/MM/yyyy hh:mm", Locale.getDefault());
 
+    /**Luu lich su phep tinh
+     *
+     * @param context
+     * @param expressions
+     */
     public HistoryExpressionsAdapter(Context context, ArrayList<? extends HistoryExpression> expressions) {
         this.expressions = expressions;
 
@@ -56,6 +61,9 @@ public class HistoryExpressionsAdapter extends RecyclerView.Adapter<HistoryExpre
         return expressions.size();
     }
 
+    /**Thiet lap hanh vi
+     *
+     */
     class ViewHolder extends RecyclerView.ViewHolder {
 
         TextView txtTitle;
