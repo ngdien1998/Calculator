@@ -436,6 +436,19 @@ public class CalculatorFragment extends Fragment {
     }
 
     private void btnPlusMinusOnClick(View view) {
+        if (isValidPlusMinusPostion()) {
+            appendExpression(getString(R.string.btn_plus_minus_label), false);
+            appendTagExpression("-");
+        }
+    }
+
+    private boolean isValidPlusMinusPostion() {
+        String expression = getCalculatableExpression().trim();
+        if (expression.isEmpty()) {
+            return true;
+        }
+        char last = expression.charAt(expression.length() - 1);
+        return last == '+' || last == '-' || last == '*' || last == '/' || last == '(';
     }
 
     private void btnEqualOnClick(View view) {
@@ -491,7 +504,7 @@ public class CalculatorFragment extends Fragment {
             return false;
         }
         char last = currentEpx.charAt(currentEpx.length() - 1);
-        return Character.isDigit(last) || last == ')' || last == '%' || last == 'p' || last == 'e';
+        return Character.isDigit(last) || last == ')' || last == '%' || last == 'p' || last == 'e' || last == '!';
     }
 
     private void btnPlusOnClick(View view) {
@@ -502,7 +515,7 @@ public class CalculatorFragment extends Fragment {
     }
 
     private void btnMinusOnClick(View view) {
-        if (isValidOperatorPosition()) {
+        if (isValidOperatorPosition() || isValidPlusMinusPostion()) {
             appendExpression(getString(R.string.btn_minus_label), false);
             appendTagExpression("-");
         }
@@ -606,7 +619,7 @@ public class CalculatorFragment extends Fragment {
         }
         String currentEpx = getCalculatableExpression();
         char last = currentEpx.charAt(currentEpx.length() - 1);
-        return Character.isDigit(last) || last == ')' || last == '%' || last == 'e' || last == 'π';
+        return Character.isDigit(last) || last == ')' || last == '%' || last == 'e' || last == 'p';
     }
 
     /**
@@ -647,7 +660,7 @@ public class CalculatorFragment extends Fragment {
             }
         } else {
             if(isValidOperatorXPowersPosition()){
-                appendExpression("^(3)", true);
+                appendExpression("^3", true);
             }
         }
     }
@@ -680,7 +693,7 @@ public class CalculatorFragment extends Fragment {
     private void btnXPowers2_CoshPowersMinus1OnClick(View view) {
         if (mIsFirstPage) {
             if(isValidOperatorXPowersPosition()){
-                appendExpression("^(2)", true);
+                appendExpression("^2", true);
             }
         } else {
             if(isValidOperatorSpecialPosition()) {
