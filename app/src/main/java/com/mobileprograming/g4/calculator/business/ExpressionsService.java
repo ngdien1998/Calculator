@@ -12,4 +12,6 @@ public interface ExpressionsService {
     boolean saveHistoryExpression(HistoryExpression expression);
     boolean clearSavedExpressions();
     boolean clearHistoryExpressions();
+    boolean deleteHistoryExpression(int id);
+    boolean deleteSaveExpression(int id);
 }

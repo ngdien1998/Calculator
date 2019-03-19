@@ -3,6 +3,7 @@ package com.mobileprograming.g4.calculator.models;
 public class HistoryExpression {
     private String expression;
     private String result;
+    private  int id;
 
     public HistoryExpression() {
     }
@@ -26,5 +27,13 @@ public class HistoryExpression {
 
     public void setResult(String result) {
         this.result = result;
+    }
+
+    public int getId() {
+        return id;
+    }
+
+    public void setId(int id) {
+        this.id = id;
     }
 }

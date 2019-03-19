@@ -13,15 +13,15 @@ import com.mobileprograming.g4.calculator.R;
 import com.mobileprograming.g4.calculator.adapters.HistoryExpressionsAdapter;
 import com.mobileprograming.g4.calculator.business.ExpressionsCalculateService;
 import com.mobileprograming.g4.calculator.models.HistoryExpression;
-import com.mobileprograming.g4.calculator.models.SavedExpression;
 
 import java.io.IOException;
 import java.util.ArrayList;
 
 public class AllExpressionsFragment extends Fragment {
 
-    ArrayList<HistoryExpression> expressions;
+    private ArrayList<HistoryExpression> expressions;
     private HistoryExpressionsAdapter adapter;
+    private ExpressionsCalculateService calculatorService;
 
     public AllExpressionsFragment() {
         ItemClearedCallback callback = this::historyExpressionOnCleared;
@@ -48,11 +48,13 @@ public class AllExpressionsFragment extends Fragment {
         rclAllExps.setLayoutManager(layoutManager);
 
         try {
-            ExpressionsCalculateService calculatorService = ExpressionsCalculateService.getInstance(getContext());
+            calculatorService = ExpressionsCalculateService.getInstance(getContext());
             expressions = calculatorService.getHistoryExpressions();
 
+            ExpressionDeletedCallback deletedCallback = this::expressionOnDelete;
+
             if (expressions != null) {
-                adapter = new HistoryExpressionsAdapter(getContext(), expressions);
+                adapter = new HistoryExpressionsAdapter(getContext(), expressions, deletedCallback);
                 rclAllExps.setAdapter(adapter);
             }
         } catch (IOException e) {
@@ -60,5 +62,11 @@ public class AllExpressionsFragment extends Fragment {
         }
 
         return view;
+    }
+
+    private void expressionOnDelete() {
+        expressions.clear();
+        expressions.addAll(calculatorService.getHistoryExpressions());
+        adapter.notifyDataSetChanged();
     }
 }

@@ -20,9 +20,19 @@
             android:id="@+id/txtExpression"
             android:textSize="20sp"
             android:textAlignment="textEnd" />
-    </TableRow>
 
+        <ImageButton
+            android:layout_marginStart="8dp"
+            android:id="@+id/btnDelete"
+            android:src="@drawable/ic_delete"
+            android:background="@android:color/transparent"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:contentDescription="Delete" />
+
+    </TableRow>
     <TableRow>
+
 
         <TextView
             android:id="@+id/txtTime"
@@ -33,14 +43,16 @@
 
         <TextView
             android:id="@+id/txtResult"
+            android:text="fssf"
+            android:textAlignment="textEnd"
             android:textColor="@color/colorPrimary"
-            android:textSize="24sp"
-            android:textAlignment="textEnd" />
+            android:textSize="24sp" />
+
     </TableRow>
 
     <View
         android:layout_width="fill_parent"
         android:layout_height="1dp"
-        android:background="@android:color/darker_gray"/>
+        android:background="@android:color/darker_gray" />
 
 </TableLayout>

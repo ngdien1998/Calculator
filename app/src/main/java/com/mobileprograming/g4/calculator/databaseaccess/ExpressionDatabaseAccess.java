@@ -12,4 +12,6 @@ public interface ExpressionDatabaseAccess {
     void saveExpression(SavedExpression expression);
     void clearSavedExpressions();
     void clearHistoryExpressions();
+    void deleteHistoryExpression(int id);
+    void deleteSavedExpression(int id);
 }

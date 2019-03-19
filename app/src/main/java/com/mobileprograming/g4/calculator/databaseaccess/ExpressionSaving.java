@@ -59,4 +59,16 @@ public class ExpressionSaving extends SqliteHelper implements ExpressionDatabase
         String query = "DELETE FROM HistoryExpression";
         database.execSQL(query);
     }
+
+    @Override
+    public void deleteHistoryExpression(int id) {
+        String query = "DELETE FROM HistoryExpression WHERE ID = ?";
+        database.execSQL(query,new Integer[]{id});
+    }
+
+    @Override
+    public void deleteSavedExpression(int id) {
+        String query = "DELETE FROM SavedExpression WHERE ID = ?";
+        database.execSQL(query,new Integer[]{id});
+    }
 }

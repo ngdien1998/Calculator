@@ -55,10 +55,11 @@ public class ExpressionsCalculateService implements CalculateService, Expression
             while (cursor.moveToNext()) {
                 SavedExpression expression = new SavedExpression();
 
-                expression.setTitle(cursor.getString(0));
-                expression.setSavedTime(dateFormat.parse(cursor.getString(1)));
-                expression.setExpression(cursor.getString(2));
-                expression.setResult(cursor.getString(3));
+                expression.setId(cursor.getInt(0));
+                expression.setTitle(cursor.getString(1));
+                expression.setSavedTime(dateFormat.parse(cursor.getString(2)));
+                expression.setExpression(cursor.getString(3));
+                expression.setResult(cursor.getString(4));
 
                 expressions.add(expression);
             }
@@ -78,8 +79,9 @@ public class ExpressionsCalculateService implements CalculateService, Expression
             while (cursor.moveToNext()) {
                 HistoryExpression expression = new HistoryExpression();
 
-                expression.setExpression(cursor.getString(0));
-                expression.setResult(cursor.getString(1));
+                expression.setId(cursor.getInt(0));
+                expression.setExpression(cursor.getString(1));
+                expression.setResult(cursor.getString(2));
 
                 expressions.add(expression);
             }
@@ -125,6 +127,33 @@ public class ExpressionsCalculateService implements CalculateService, Expression
             databaseHelper.clearHistoryExpressions();
             return true;
         } catch (SQLException e) {
+            return false;
+        }
+    }
+
+    @Override
+    public boolean deleteHistoryExpression(int id) {
+        try
+        {
+            databaseHelper.deleteHistoryExpression(id);
+            return true;
+        }
+        catch (SQLException e)
+        {
+            return false;
+        }
+
+    }
+
+    @Override
+    public boolean deleteSaveExpression(int id) {
+        try
+        {
+            databaseHelper.deleteSavedExpression(id);
+            return true;
+        }
+        catch (SQLException e)
+        {
             return false;
         }
     }

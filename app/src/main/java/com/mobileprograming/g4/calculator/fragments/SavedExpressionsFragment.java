@@ -21,6 +21,7 @@ public class SavedExpressionsFragment extends Fragment {
 
     ArrayList<SavedExpression> expressions;
     private HistoryExpressionsAdapter adapter;
+    private  ExpressionsCalculateService calculatorService;
 
     public SavedExpressionsFragment() {
         ItemClearedCallback callback = this::savedExpressionOnCleared;
@@ -46,15 +47,24 @@ public class SavedExpressionsFragment extends Fragment {
         rclAllExps.setLayoutManager(layoutManager);
 
         try {
-            ExpressionsCalculateService calculatorService = ExpressionsCalculateService.getInstance(getContext());
+           calculatorService = ExpressionsCalculateService.getInstance(getContext());
             expressions = calculatorService.getSavedExpressions();
 
-            adapter = new HistoryExpressionsAdapter(getContext(), expressions);
+            ExpressionDeletedCallback deletedCallback = this::expressionOnDelete;
+
+            adapter = new HistoryExpressionsAdapter(getContext(), expressions, deletedCallback);
             rclAllExps.setAdapter(adapter);
         } catch (IOException e) {
             e.printStackTrace();
         }
 
         return view;
+    }
+
+    private void expressionOnDelete() {
+
+        expressions.clear();
+        expressions.addAll(calculatorService.getSavedExpressions());
+        adapter.notifyDataSetChanged();
     }
 }
