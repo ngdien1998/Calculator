@@ -437,7 +437,7 @@ public class CalculatorFragment extends Fragment {
 
     private void btnPlusMinusOnClick(View view) {
         if (isValidPlusMinusPostion()) {
-            appendExpression(getString(R.string.btn_plus_minus_label), false);
+            appendExpression(getString(R.string.btn_minus_label), false);
             appendTagExpression("-");
         }
     }
@@ -588,7 +588,7 @@ public class CalculatorFragment extends Fragment {
         }
 
         char last = currentExpression.charAt(len - 1);
-        return (Character.isDigit(last) || last == ')') && countOpen > countClose;
+        return (Character.isDigit(last) || last == 'p' || last == 'e' || last == ')') && countOpen > countClose;
     }
 
 
