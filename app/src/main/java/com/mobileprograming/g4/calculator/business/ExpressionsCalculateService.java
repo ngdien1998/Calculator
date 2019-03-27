@@ -44,7 +44,11 @@ public class ExpressionsCalculateService implements CalculateService, Expression
         if (String.valueOf(result).toLowerCase().equals("nan")) {
             throw new InvalidExpressionFormatException("Expression format invalid");
         }
-        return String.valueOf(result);
+        String res = String.format(Locale.getDefault(), "%.8f", result);
+        while (res.endsWith("0") || res.endsWith(".")) {
+            res = res.substring(0, res.length() - 1);
+        }
+        return res;
     }
 
     @Override
