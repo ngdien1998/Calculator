@@ -39,7 +39,6 @@
     <string name="btn_absx_label">|x|</string>
     <string name="btn_pi_label">π</string>
     <string name="btn_e_label">e</string>
-    <string name="edt_expression_hint">Expression</string>
     <string name="txt_rad_text">RAD</string>
     <string name="btn_history_desc">History</string>
     <string name="clear_all_saved_expressions">Clear all saved expressions</string>

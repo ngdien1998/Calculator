@@ -1,7 +1,6 @@
 package com.mobileprograming.g4.calculator.adapters;
 
 import android.content.Context;
-import android.content.DialogInterface;
 import android.support.annotation.NonNull;
 import android.support.v7.app.AlertDialog;
 import android.support.v7.widget.RecyclerView;
@@ -21,7 +20,6 @@ import java.io.IOException;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Locale;
-import java.util.Objects;
 
 public class HistoryExpressionsAdapter extends RecyclerView.Adapter<HistoryExpressionsAdapter.ViewHolder> {
 
@@ -44,7 +42,6 @@ public class HistoryExpressionsAdapter extends RecyclerView.Adapter<HistoryExpre
     @NonNull
     @Override
     public ViewHolder onCreateViewHolder(@NonNull ViewGroup viewGroup, int position) {
-
         View itemExp = inflater.inflate(R.layout.item_expression, viewGroup, false);
         return new HistoryExpressionsAdapter.ViewHolder(itemExp);
     }
@@ -68,7 +65,8 @@ public class HistoryExpressionsAdapter extends RecyclerView.Adapter<HistoryExpre
             int id = expression.getId();
 
             AlertDialog.Builder dialogBuilder = new AlertDialog.Builder(context);
-            dialogBuilder.setTitle("Are you sure to delete this item?");
+            dialogBuilder.setTitle("Delete expression");
+            dialogBuilder.setMessage("This won't be able to undo. Are you sure to delele it from history?");
             dialogBuilder.setCancelable(true);
             dialogBuilder.setNegativeButton("Delete", (dialog, which) -> {
                 if (expression instanceof SavedExpression) {
@@ -105,7 +103,7 @@ public class HistoryExpressionsAdapter extends RecyclerView.Adapter<HistoryExpre
             txtExpression = itemView.findViewById(R.id.txtExpression);
             txtTime = itemView.findViewById(R.id.txtTime);
             txtResult = itemView.findViewById(R.id.txtResult);
-            btnDelete =itemView.findViewById(R.id.btnDelete);
+            btnDelete = itemView.findViewById(R.id.btnDelete);
         }
     }
 }

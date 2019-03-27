@@ -24,7 +24,6 @@
             android:textSize="32sp"
             android:textColor="@android:color/background_dark"
             android:cursorVisible="false"
-            android:hint="@string/edt_expression_hint"
             android:inputType="text"
             android:autofillHints="no" />
 
